@@ -1,0 +1,51 @@
+<?php
+// Database sharding configuration 
+//
+if (!isset($dbconfig)) {
+	$dbconfig = array();
+}
+
+$dbconfig['security_application'] =
+	array (
+		'total_shards' => 1,
+		'shards_digit' => 1,
+		'username' => 'securityuser',
+		'password' => 'password',
+		'server_list' => array (
+			'192.168.0.123' => array('min'=>0, 'max'=>0)
+		) 
+	);
+
+$dbconfig['security_lookup_application'] =
+	array (
+		'total_shards' => 1,
+		'shards_digit' => 1,
+		'username' => 'securityuser',
+		'password' => 'password',
+		'server_list' => array (
+			'192.168.0.123' => array('min'=>0, 'max'=>0)
+		) 
+	);
+
+$dbconfig['security_iterm'] =
+	array (
+		'total_shards' => 1,
+		'shards_digit' => 1,
+		'username' => 'securityuser',
+		'password' => 'password',
+		'server_list' => array (
+			'192.168.0.123' => array('min'=>0, 'max'=>0)
+		) 
+	);
+
+$dbconfig['security_rule'] =
+	array (
+		'total_shards' => 1,
+		'shards_digit' => 1,
+		'username' => 'securityuser',
+		'password' => 'password',
+		'server_list' => array (
+			'192.168.0.123' => array('min'=>0, 'max'=>0)
+		) 
+	);
+?>

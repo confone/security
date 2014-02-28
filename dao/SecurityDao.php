@@ -221,7 +221,7 @@ abstract class SecurityDao {
 		$dbName = $this->getShardedDatabaseName();
 		$tableName = $this->getTableName();
 
-		$sequenceKey = $dbName.'.'.$tableName.ConfoneDao::SEQUENCE;
+		$sequenceKey = $dbName.'.'.$tableName.SecurityDao::SEQUENCE;
 
 		$mem = CacheUtil::getInstance();
 
@@ -236,7 +236,7 @@ abstract class SecurityDao {
 	}
 
 	private function getNextShardSequence() {
-		$sequenceKey = $this->getShardDomain().ConfoneDao::SEQUENCE;
+		$sequenceKey = $this->getShardDomain().SecurityDao::SEQUENCE;
 
 		$mem = CacheUtil::getInstance();
 
