@@ -153,8 +153,8 @@ function validateHeaders() {
 
     $headers = apache_request_headers();
 
-    if (isset($headers['app-key'])) {
-        $_CLIENT = ClientDao::getClientByAppKey($headers['app-key']);
+    if (isset($headers['account-token'])) {
+        $_CLIENT = ClientDao::getClientByAppKey($headers['account-token']);
     } else {
         if (strpos($_SERVER['REQUEST_URI'], 'display')!==FALSE) {
             return;
