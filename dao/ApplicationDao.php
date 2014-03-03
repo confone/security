@@ -15,6 +15,11 @@ class ApplicationDao extends SecurityDao {
 
 // =============================================== public function =================================================
 
+	public static function getApplicationByPrivateKey($privateKey) {
+		$applicationId = LookupPrivateKeyApplicationDao::getApplicationIdsByPrivateKey($privateKey);
+
+		return new ApplicationDao($applicationId);
+	}
 
 
 // ============================================ override functions ==================================================
@@ -32,10 +37,19 @@ class ApplicationDao extends SecurityDao {
 	}
 
 	protected function beforeInsert() {
-		$lookup = new LookupImageCodeDao();
-		$lookup->var[LookupImageCodeDao::CODE] = $this->var[LookupImageCodeDao::CODE];
-		$lookup->var[LookupImageCodeDao::PROJECTPATHID] = $this->var[LookupImageCodeDao::PROJECTPATHID];
-		$lookup->var[LookupImageCodeDao::IMAGEID] = $this->var[LookupImageCodeDao::IDCOLUMN];
+		$lookup = new LookupAccountApplicationDao();
+		$lookup->var[LookupAccountApplicationDao::ACCOUNTID] = $this->var[ApplicationDao::ACCOUNTID];
+		$lookup->var[LookupAccountApplicationDao::APPLICATIONID] = $this->var[ApplicationDao::IDCOLUMN];
+		$lookup->save();
+
+		$lookup = new LookupPublicKeyApplicationDao();
+		$lookup->var[LookupPublicKeyApplicationDao::PUBLICKEY] = $this->var[ApplicationDao::PUBLICKEY];
+		$lookup->var[LookupPublicKeyApplicationDao::APPLICATIONID] = $this->var[ApplicationDao::IDCOLUMN];
+		$lookup->save();
+
+		$lookup = new LookupPrivateKeyApplicationDao();
+		$lookup->var[LookupPrivateKeyApplicationDao::PRIVATEKEY] = $this->var[ApplicationDao::PRIVATEKEY];
+		$lookup->var[LookupPrivateKeyApplicationDao::APPLICATIONID] = $this->var[ApplicationDao::IDCOLUMN];
 		$lookup->save();
 	}
 

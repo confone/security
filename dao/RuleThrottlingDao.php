@@ -15,6 +15,9 @@ class RuleThrottlingDao extends SecurityDao {
 
 // =============================================== public function =================================================
 
+	public function getErrorMessage() {
+		return 'Fail Throttling Rule - '.$this->var[RuleThrottlingDao::NAME];
+	}
 
 // ============================================ override functions ==================================================
 

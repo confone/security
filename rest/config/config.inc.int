@@ -1,5 +1,5 @@
 <?php
-$base_host = 'http://local.security.confone.com';
+$base_host = 'http://int.security.confone.com';
 $base_uri = '/rest';
 
 

@@ -2,25 +2,26 @@
 abstract class Handler {
 
     private $validator;
+    protected $json;
 
     public function execute($params) {
         if (isset($this->validator)) {
-            $json = Utility::getJsonRequestData();
+            $this->json = Utility::getJsonRequestData();
 
-            if (empty($json)) {
+            if (empty($this->json)) {
                 $raw = Utility::getRawRequestData();
 
                 if (empty($raw)) { 
-                	$json = array(); 
+                	$this->json = array(); 
                 }
                 else { 
                 	$response = array('status'=>'error','description'=>'invalid_json_format'); 
                 }  
             }
 
-            $json = empty($_GET) ? $json : array_merge($_GET, $json);
+            $this->json = empty($_GET) ? $this->json : array_merge($_GET, $this->json);
 
-            $tobeValidated = empty($params) ? $json : array_merge($params, $json);
+            $tobeValidated = empty($params) ? $this->json : array_merge($params, $this->json);
 
             $this->validator->setObjectToBeValidated($tobeValidated);
 
@@ -45,4 +46,6 @@ abstract class Handler {
     protected function getValidator() {
     	return $this->validator;
     }
+
+    abstract protected function handle($params);
 }

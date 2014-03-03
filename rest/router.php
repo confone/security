@@ -1,5 +1,6 @@
 <?php
 include 'config/config.inc';
+date_default_timezone_set('America/Vancouver');
 blockIp();
 $services = array('GET'=>array(), 'POST'=>array(), 'PUT'=>array(), 'DELETE'=>array());
 include 'config/mapping.php';
