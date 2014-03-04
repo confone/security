@@ -1,4 +1,5 @@
 <?php
+include '../dao/config/config.inc';
 include 'config/config.inc';
 date_default_timezone_set('America/Vancouver');
 blockIp();
@@ -7,7 +8,7 @@ include 'config/mapping.php';
 
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
-validateHeaders();
+//validateHeaders();
 
 // remove base uri from the request uri
 //
@@ -154,7 +155,7 @@ function validateHeaders() {
     $headers = apache_request_headers();
 
     if (isset($headers['account-token'])) {
-        $_CLIENT = ClientDao::getClientByAppKey($headers['account-token']);
+        $_CLIENT = SecurityClientDao::getClientByAppKey($headers['account-token']);
     } else {
         if (strpos($_SERVER['REQUEST_URI'], 'display')!==FALSE) {
             return;

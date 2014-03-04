@@ -24,7 +24,7 @@ class ApplicationRulesDao extends SecurityDao {
 				.ApplicationRulesDao::APPLICATIONID."=$applicationId ORDER BY "
 				.ApplicationRulesDao::RULEORDER;
 
-		$connect = DBUtil::getConn($lookup);
+		$connect = DBUtil::getConn($rules);
 		$rows = DBUtil::selectDataList($connect, $sql);
 
 		return $rules->makeObjectsFromSelectListResult($rows, 'ApplicationRulesDao');

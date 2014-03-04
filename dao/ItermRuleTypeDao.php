@@ -4,7 +4,7 @@ class ItermRuleTypeDao extends SecurityDao {
 	const TYPE = 'type';
 	const LANGUAGE = 'language';
 	const DESCRIPTION = 'description';
-	const GROUP = 'group';
+	const RULESET = 'rule_set';
 	const ACTIVE = 'active';
 
 	const IDCOLUMN = 'id';
@@ -32,12 +32,12 @@ class ItermRuleTypeDao extends SecurityDao {
 		$this->var[ItermRuleTypeDao::TYPE] = 0;
 		$this->var[ItermRuleTypeDao::LANGUAGE] = '';
 		$this->var[ItermRuleTypeDao::DESCRIPTION] = '';
-		$this->var[ItermRuleTypeDao::GROUP] = 'RuleType';
+		$this->var[ItermRuleTypeDao::RULESET] = 'RuleType';
 		$this->var[ItermRuleTypeDao::ACTIVE] = 'N';
 	}
 
 	protected function beforeInsert() {
-		$sequence = Utility::hashString($this->var[ItermRuleTypeDao::GROUP]);
+		$sequence = Utility::hashString($this->var[ItermRuleTypeDao::RULESET]);
 		$this->setShardId($sequence);
 	}
 

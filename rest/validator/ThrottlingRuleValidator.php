@@ -38,7 +38,7 @@ class ThrottlingRuleValidator extends Validator {
     	foreach ($appRules as $appRule) {
     		switch ($appRule->var[ApplicationRulesDao::RULETYPE]) {
 
-    			case 'RuleThrottlingDao':
+    			case 1: // Throttling
     				$valid = true;
     				$rule = new RuleThrottlingDao($appRule->var[ApplicationRulesDao::RULEID]);
     				array_push($this->rules, $rule);

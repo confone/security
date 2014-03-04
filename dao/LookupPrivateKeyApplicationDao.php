@@ -5,7 +5,7 @@ class LookupPrivateKeyApplicationDao extends SecurityDao {
 	const APPLICATIONID = 'application_id';
 
 	const IDCOLUMN = 'id';
-	const SHARDDOMAIN = 'confone_lookup_application';
+	const SHARDDOMAIN = 'security_lookup_application';
 	const TABLE = 'privatekey_application';
 
 // ============================================ override functions ==================================================

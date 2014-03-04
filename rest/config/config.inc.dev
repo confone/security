@@ -29,7 +29,7 @@ $mongo_password = '';
 //=======================================================================================
 // Cache server information
 $cache_servers = array (
-'localhost' => '11211'
+'192.168.0.119' => '11211'
 );
 
 
@@ -37,10 +37,10 @@ $cache_servers = array (
 // logging information
 // INFO=4, WARN=3, ERROR=2, FATAL=1, NOTHING=0
 $log_level = 4;
-$log_file = '/opt/confone/rest/logs/rest.log';
+$log_file = '/opt/confone/security/logs/rest.log';
 
 $access_on = 1;
-$access_log = '/opt/confone/rest/logs/rest_access.log';
+$access_log = '/opt/confone/security/logs/rest_access.log';
 
 
 //=======================================================================================

@@ -6,15 +6,17 @@ class ThrottlingRuleEnforcer extends Enforcer {
 		$subject = $this->getSubject();
 
 		$end = strtotime('now');
-		$interval = $rule->var[RuleThrottlingDao::INTERVAL];
-		$start = $end - $interval;
+		$duration = $rule->var[RuleThrottlingDao::DURATION];
+		$start = $end - $duration;
 
 		global $mongo_database, $mongo_username, $mongo_password;
-		$auth = !empty($mongo_username) ? $mongo_username.':'.$mongo_password : '';
+		$auth = !empty($mongo_username) ? $mongo_username.':'.$mongo_password.'@' : '';
 
 		try {
-			$connection = new MongoClient('mongodb://'.$auth.'@'.$mongo_database);
+			$connection = new MongoClient('mongodb://'.$auth.$mongo_database.'/?journal=true&w=1');
 			$collection = $connection->throttling->requests;
+			$document = array('subject'=>$subject, 'time'=>$end);
+			$collection->insert($document);
 
 			$query = array (
 				'time' => array( '$gt'=>$start, '$lt'=>$end )
@@ -25,8 +27,6 @@ class ThrottlingRuleEnforcer extends Enforcer {
 
 			$valid = ($count <= $allowance);
 
-			$document = array('subject'=>$subject, 'time'=>$end);
-			$collection->insert($document);
 			$collection->remove(array('time'=>array('$lt'=>$start)));
 
 			$connection->close();

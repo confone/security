@@ -3,7 +3,7 @@ class RuleThrottlingDao extends SecurityDao {
 
 	const NAME = 'name';
 	const DESCRIPTION = 'description';
-	const INTERVAL = 'interval';
+	const DURATION = 'duration';
 	const ALLOWANCE = 'allowance';
 	const CREATETIME = 'create_time';
 	const MODIFIEDTIME = 'modified_time';
@@ -25,7 +25,7 @@ class RuleThrottlingDao extends SecurityDao {
 		$this->var[RuleThrottlingDao::IDCOLUMN] = 0;
 		$this->var[RuleThrottlingDao::NAME] = '';
 		$this->var[RuleThrottlingDao::DESCRIPTION] = '';
-		$this->var[RuleThrottlingDao::INTERVAL] = 0;
+		$this->var[RuleThrottlingDao::DURATION] = 0;
 		$this->var[RuleThrottlingDao::ALLOWANCE] = 0;
 
 		$date = gmdate('Y-m-d H:i:s');
