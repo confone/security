@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !=/router.php
+RewriteRule ^ router.php?uri=%{REQUEST_URI}

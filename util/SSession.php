@@ -1,7 +1,7 @@
 <?php
 class SSession {
 
-    public static $AUTHINDEX = 'auth_index';
+    public static $AUTHINDEX = 'account_id';
 	public static $SESSION_KEY = 'CONFONESESSIONID';
 	public static $LAST_ACTIVE = 'LAST_ACTIVE';
 
