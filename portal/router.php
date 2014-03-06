@@ -1,21 +1,28 @@
 <?php
 include 'config/config.inc';
 
-$file = ltrim($_SERVER['REQUEST_URI'], '/');
+$uri = ltrim($_SERVER['REQUEST_URI'], '/');
+
 $session = SSession::instance();
-if (!$session->get(SSession::$AUTHINDEX)) {
+$_ACCOUNTID = $session->get(SSession::$AUTHINDEX);
+if (!$_ACCOUNTID) {
 	global $account_url;
-	header('Location: '.$account_url.'?service=security&redirect_uri='.urlencode($file));
+	header('Location: '.$account_url.'?service=security&redirect_uri='.urlencode($uri));
 }
-$file = parseGetparams($file).'.php';
 
 include '../dao/config/config.inc';
 
 date_default_timezone_set('America/Vancouver');
 
-if (file_exists($file)) {
-	include $file;
-} else if ($file=='index.php' || $file=='.php') {
+// if $uri is set add .php ot its end for include as file name
+//
+if (!empty($uri)) {
+	$uri = parseGetparams($uri).'.php';
+}
+
+if (file_exists($uri)) {
+	include $uri;
+} else if (empty($uri) || $uri=='index.php') {
 	include 'application/index.php';
 } else {
 	include 'include/404.php';
