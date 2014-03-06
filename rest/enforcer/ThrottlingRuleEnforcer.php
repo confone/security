@@ -13,23 +13,21 @@ class ThrottlingRuleEnforcer extends Enforcer {
 		$auth = !empty($mongo_username) ? $mongo_username.':'.$mongo_password.'@' : '';
 
 		try {
-			$connection = new MongoClient('mongodb://'.$auth.$mongo_database.'/?journal=true&w=1');
-			$collection = $connection->throttling->requests;
-			$document = array('subject'=>$subject, 'time'=>$end);
-			$collection->insert($document);
-
-			$query = array (
-				'time' => array( '$gt'=>$start, '$lt'=>$end )
-			);
-			$count = $collection->count($query);
+			$count = RuleCacheThrottlingDao::countSubject ( 
+				$rule->var[RuleThrottlingDao::IDCOLUMN], $subject, $start, $end );
 
 			$allowance = $rule->var[RuleThrottlingDao::ALLOWANCE];
 
-			$valid = ($count <= $allowance);
+			$valid = ($count < $allowance);
 
-			$collection->remove(array('time'=>array('$lt'=>$start)));
+			$cache = new RuleCacheThrottlingDao();
+			$cache->var[RuleCacheThrottlingDao::RULEID] = $rule->var[RuleThrottlingDao::IDCOLUMN];
+			$cache->var[RuleCacheThrottlingDao::SUBJECT] = $subject;
+			$cache->var[RuleCacheThrottlingDao::TIME] = $end;
+			$cache->save();
 
-			$connection->close();
+			RuleCacheThrottlingDao::removeOldCache ( 
+				$rule->var[RuleThrottlingDao::IDCOLUMN], $subject, $start );
 		} catch (Exception $e) { $valid = true; }
 
 		return $valid;

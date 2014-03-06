@@ -5,10 +5,11 @@ date_default_timezone_set('America/Vancouver');
 blockIp();
 $services = array('GET'=>array(), 'POST'=>array(), 'PUT'=>array(), 'DELETE'=>array());
 include 'config/mapping.php';
+global $_APPLICATION;
 
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
-//validateHeaders();
+validateHeaders();
 
 // remove base uri from the request uri
 //
@@ -150,19 +151,19 @@ function parseGetparams($uri) {
  * Function validates all neccessary headers incluidng app-key and Content-Type
  */
 function validateHeaders() {
-    global $_CLIENT;
+    global $_APPLICATION;
 
     $headers = apache_request_headers();
 
-    if (isset($headers['account-token'])) {
-        $_CLIENT = SecurityClientDao::getClientByAppKey($headers['account-token']);
+    if (isset($headers['private-key'])) {
+        $_APPLICATION = ApplicationDao::getApplicationByPrivateKey($headers['private-key']);
     } else {
         if (strpos($_SERVER['REQUEST_URI'], 'display')!==FALSE) {
             return;
         }
     }
 
-    if (!$_CLIENT) {
+    if (!$_APPLICATION) {
         header('HTTP/1.0 401 Unauthorized');
         echo '{"error":"401 Unauthorized"}';
         exit;

@@ -22,18 +22,10 @@ class ThrottlingRuleValidator extends Validator {
     		return $valid;
     	}
 
-    	$application = ApplicationDao::getApplicationByPrivateKey($headers['private-key']);
-
-    	$valid = $application->isFromDatabase();
-    	if (!$valid) {
-    		header('HTTP/1.0 404 Not Found');
-    		$this->setErrorMessage('cannot find application');
-    		return $valid;
-    	}
-
     	$this->rules = array();
 
-    	$appRules = ApplicationRulesDao::getRulesByApplicationId($application->var[ApplicationDao::IDCOLUMN]);
+    	global $_APPLICATION;
+    	$appRules = ApplicationRulesDao::getRulesByApplicationId($_APPLICATION->var[ApplicationDao::IDCOLUMN]);
 
     	foreach ($appRules as $appRule) {
     		switch ($appRule->var[ApplicationRulesDao::RULETYPE]) {
