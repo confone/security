@@ -22,20 +22,4 @@ $log_file = '/opt/confone/security/logs/portal.log';
 
 $access_on = 1;
 $access_log = '/opt/confone/security/logs/portal_access.log';
-
-
-// =======================================================================================
-// autoload directories
-function __autoload($class_name) {
-    global $autoload_dirs;
-
-    // loop through all configured included folders for the {$class_name}.php file.
-    //
-    foreach ($autoload_dirs as $dir) {
-        if (is_file($dir.'/'.$class_name.'.php')) {
-            include ($dir.'/'.$class_name.'.php');
-            return;
-        }
-    }
-}
 ?>
