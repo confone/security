@@ -20,7 +20,7 @@ class ThrottlingRuleHandler extends Handler {
 		if (empty($errors)) {
 			return array('status'=>'success');
 		} else {
-			return array('status'=>'error', 'description'=>json_encode($errors));
+			return array('status'=>'error', 'description'=>$errors);
 		}
 	}
 }

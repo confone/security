@@ -1,10 +1,12 @@
 <?php 
-$account_url = 'http://local.account.confone.com/login';
+$account_url = 'http://local.account.confone.com';
 
 // =======================================================================================
 // auto include directory information
 $autoload_dirs = array( '../util', 
-                        '../dao' );
+                        '../dao',
+                        '../dao/parent',
+						'controller', );
 
 
 //=======================================================================================

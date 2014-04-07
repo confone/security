@@ -1,9 +1,11 @@
 <?php
-abstract class SecurityDao {
+abstract class SecurityDaoBase {
 
 	const SEQUENCE = '_shard_sequence';
 
-	public $var = array();
+	protected $var = array();
+
+	protected $update = array();
 
 	protected $fromdb = false;
 
@@ -67,20 +69,17 @@ abstract class SecurityDao {
 	protected function retrive() {
 		$idColumn = $this->getIdColumnName();
 
-		// table name and primary key column name from abstract implementation of each sub class
-		//
-		$sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE '. $this->getIdColumnName() . '=' . $this->var[$idColumn];
+		$query = new QueryBuilder($this);
+		$res = $query->select('*', $this->getTableName())
+					 ->where($this->getIdColumnName(), $this->var[$idColumn])
+					 ->find();
 
-		$db_conn = DBUtil::getConn($this);
-		$res = DBUtil::selectData($db_conn, $sql);
-	
-		$atReturn = false;
-		if (isset($res) && $res) {
+		$this->init();
+		$atReturn = isset($res) && $res; 
+		if ($atReturn) {
 			$this->var = $res;
-			$atReturn = true;
 		} else {
 			$id = $this->var[$idColumn];
-			$this->init();
 			$this->var[$idColumn] = $id;
 		}
 
@@ -91,34 +90,12 @@ abstract class SecurityDao {
 	 * 
 	 * Insert an object to database
 	 */
-	private function insert()
-	{
-		// primary key id columnd name from abstract implementation of sub class
-		//
+	private function insert() {
 		$idColumn = $this->getIdColumnName();
 
-		$db_conn = DBUtil::getConn($this);
-
-		$fileds = '(';
-		$values = '(';
-		foreach ($this->var as $key=>$val)
-		{
-			if ( isset($val) )
-			{
-				$fileds .= $key . ',';
-				$values .= DBUtil::checkNull($db_conn, $val) . ',';
-			}
-		}
-		$fileds = rtrim($fileds, ',') . ')';
-		$values = rtrim($values, ',') . ')';
-
-		// table name from abstract implementation of sub class
-		//
-		$table = $this->getTableName();
-
-		$sql = "INSERT INTO $table $fileds VALUES $values";
-
-		$res = DBUtil::insertData($db_conn, $sql);
+		$query = new QueryBuilder($this);
+		$res = $query->insert($this->var, $this->getTableName())
+					 ->query();
 
 		if ($res==-1) { Logger::error($sql); }
 
@@ -130,25 +107,21 @@ abstract class SecurityDao {
 	 * update the database row of the object
 	 */
 	private function update() {
-		// primary key id columnd name from abstract implementation of sub class
-		//
 		$idColumn = $this->getIdColumnName();
 
-		$db_conn = DBUtil::getConn($this);
-
-		$setter = ' SET ';
-		foreach ($this->var as $key=>$val) {
-			if ( isset($val) && $key!=$idColumn ) {
-				$setter .= $key.'='.DBUtil::checkNull($db_conn, $val).',';
+		$set = array();
+		foreach ($this->update as $key=>$val) {
+			if ($val) {
+				$set[$key] = $this->var[$key];
 			}
 		}
-		$setter = rtrim($setter, ',');
 
-		// the primary key value from abstract implementation of sub class - getObjId()
-		//
-		$sql = 'UPDATE ' . $this->getTableName() . $setter . ' WHERE ' . $idColumn . '=' . $this->var[$idColumn];
+		$builder = new QueryBuilder($this);
+		$result = $builder->update($set, $this->getTableName())
+						  ->where($idColumn, $this->var[$idColumn])
+						  ->query();
 
-		return DBUtil::updateData($db_conn, $sql);
+		return $result;
 	}
 
 	public function setShardId($shardSequence=0) {
@@ -192,7 +165,7 @@ abstract class SecurityDao {
 		return $this->fromdb;
 	}
 
-    protected function makeObjectFromSelectResult($res, $class) {
+    public static function makeObjectFromSelectResult($res, $class) {
 		$object = null;
 		if ($res) {
 			$object = new $class;
@@ -203,7 +176,7 @@ abstract class SecurityDao {
 		return $object;
 	}
 
-	protected function makeObjectsFromSelectListResult($rows, $class) {
+	public static function makeObjectsFromSelectListResult($rows, $class) {
 		$objects = array();
 		if (isset($rows)) {
 			foreach ($rows as $row) {
@@ -221,7 +194,7 @@ abstract class SecurityDao {
 		$dbName = $this->getShardedDatabaseName();
 		$tableName = $this->getTableName();
 
-		$sequenceKey = $dbName.'.'.$tableName.SecurityDao::SEQUENCE;
+		$sequenceKey = $dbName.'.'.$tableName.SecurityDaoBase::SEQUENCE;
 
 		$mem = CacheUtil::getInstance();
 
@@ -236,7 +209,7 @@ abstract class SecurityDao {
 	}
 
 	private function getNextShardSequence() {
-		$sequenceKey = $this->getShardDomain().SecurityDao::SEQUENCE;
+		$sequenceKey = $this->getShardDomain().SecurityDaoBase::SEQUENCE;
 
 		$mem = CacheUtil::getInstance();
 
@@ -264,12 +237,12 @@ abstract class SecurityDao {
 
     private function getCurrentSequence() {
     	global $dbconfig;
-		$db_connect = DBUtil::getConn($this);
+
 		$idColumn = $this->getIdColumnName();
 		$table = $this->getTableName();
 
-		$sql = "SELECT MAX($idColumn) AS max FROM $table";
-		$result = DBUtil::selectData($db_connect, $sql);
+		$query = new QueryBuilder($this);
+		$result = $query->select("MAX($idColumn) AS max", $table)->find();
 
 		$shards_digit = $dbconfig[$this->getShardDomain()]['shards_digit'];
 
@@ -288,9 +261,9 @@ abstract class SecurityDao {
 
 	abstract public function getShardDomain();
 
-	abstract protected function init();
+	abstract public function getTableName();
 
-	abstract protected function getTableName();
+	abstract protected function init();
 
 	abstract protected function getIdColumnName(); 
 

@@ -1,13 +1,5 @@
 <?php
-class RuleCacheThrottlingDao extends SecurityDao {
-
-	const RULEID = 'rule_id';
-	const SUBJECT = 'subject';
-	const TIME = 'time';
-
-	const IDCOLUMN = 'id';
-	const SHARDDOMAIN = 'security_rule_cache';
-	const TABLE = 'throttling';
+class RuleCacheThrottlingDao extends RuleCacheThrottlingDaoParent {
 
 // ============================================ override functions ==================================================
 
@@ -15,13 +7,12 @@ class RuleCacheThrottlingDao extends SecurityDao {
 		$cache = new RuleCacheThrottlingDao();
 		$cache->setServerAddress($ruleId);
 
-		$sql = "SELECT COUNT(*) as count FROM ".RuleCacheThrottlingDao::TABLE." WHERE "
-				.RuleCacheThrottlingDao::SUBJECT."='$subject' AND "
-				.RuleCacheThrottlingDao::TIME.">$start AND "
-				.RuleCacheThrottlingDao::TIME."<=$end";
-
-		$connect = DBUtil::getConn($cache);
-		$res = DBUtil::selectData($connect, $sql);
+		$builder = new QueryBuilder($cache);
+		$res = $builder->select('COUNT(*) as count')
+					   ->where('subject', $subject)
+					   ->where('time', $start, '>')
+					   ->where('time', $end, '<=')
+					   ->find();
 
 		return $res['count'];
 	}
@@ -30,39 +21,19 @@ class RuleCacheThrottlingDao extends SecurityDao {
 		$cache = new RuleCacheThrottlingDao();
 		$cache->setServerAddress($ruleId);
 
-		$sql = "DELETE FROM ".RuleCacheThrottlingDao::TABLE." WHERE "
-				.RuleCacheThrottlingDao::SUBJECT."='$subject' AND "
-				.RuleCacheThrottlingDao::TIME."<=$cutOff";
-
-		$connect = DBUtil::getConn($cache);
-		DBUtil::deleteData($connect, $sql);
+		$builder = new QueryBuilder($cache);
+		return $builder->delete()
+					   ->where('subject', $subject)
+					   ->where('time', $cutOff, '<=')
+					   ->query();
 	}
 
 
 // ============================================ override functions ==================================================
 
-	protected function init() {
-		$this->var[RuleCacheThrottlingDao::IDCOLUMN] = 0;
-		$this->var[RuleCacheThrottlingDao::RULEID] = 0;
-		$this->var[RuleCacheThrottlingDao::SUBJECT] = '';
-		$this->var[RuleCacheThrottlingDao::TIME] = 0;
-	}
-
 	protected function beforeInsert() {
-		$sequence = $this->var[RuleCacheThrottlingDao::RULEID];
+		$sequence = $this->getRuleId();
 		$this->setShardId($sequence);
-	}
-
-	public function getShardDomain() {
-		return RuleCacheThrottlingDao::SHARDDOMAIN;
-	}
-
-	public function getTableName() {
-		return RuleCacheThrottlingDao::TABLE;
-	}
-
-	public function getIdColumnName() {
-		return RuleCacheThrottlingDao::IDCOLUMN;
 	}
 
 	protected function isShardBaseObject() {

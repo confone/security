@@ -25,18 +25,15 @@ class ThrottlingRuleValidator extends Validator {
     	$this->rules = array();
 
     	global $_APPLICATION;
-    	$appRules = ApplicationRulesDao::getRulesByApplicationId($_APPLICATION->var[ApplicationDao::IDCOLUMN]);
+    	$appRules = ApplicationRulesDao::getRulesByApplicationId($_APPLICATION->getId());
 
     	foreach ($appRules as $appRule) {
-    		switch ($appRule->var[ApplicationRulesDao::RULETYPE]) {
+    		$ruleType = $appRule->getRuleType(); 
 
-    			case 1: // Throttling
-    				$valid = true;
-    				$rule = new RuleThrottlingDao($appRule->var[ApplicationRulesDao::RULEID]);
-    				array_push($this->rules, $rule);
-    			break;
-
-    			default :
+    		if ($ruleType == ApplicationRulesDao::RULE_TYPE_THROTTLING) {
+    			$valid = true;
+    			$rule = new RuleThrottlingDao($appRule->getRuleId());
+    			array_push($this->rules, $rule);
     		}
     	}
 

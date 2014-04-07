@@ -1,53 +1,23 @@
 <?php
-class RuleThrottlingDao extends SecurityDao {
-
-	const NAME = 'name';
-	const DESCRIPTION = 'description';
-	const DURATION = 'duration';
-	const ALLOWANCE = 'allowance';
-	const CREATETIME = 'create_time';
-	const MODIFIEDTIME = 'modified_time';
-
-	const IDCOLUMN = 'id';
-	const SHARDDOMAIN = 'security_rule';
-	const TABLE = 'throttling';
-
+class RuleThrottlingDao extends RuleThrottlingDaoParent {
 
 // =============================================== public function =================================================
 
 	public function getErrorMessage() {
-		return 'Fail Throttling Rule - '.$this->var[RuleThrottlingDao::NAME];
+		return 'Fail Throttling Rule - '.$this->getName();
 	}
 
 // ============================================ override functions ==================================================
 
-	protected function init() {
-		$this->var[RuleThrottlingDao::IDCOLUMN] = 0;
-		$this->var[RuleThrottlingDao::NAME] = '';
-		$this->var[RuleThrottlingDao::DESCRIPTION] = '';
-		$this->var[RuleThrottlingDao::DURATION] = 0;
-		$this->var[RuleThrottlingDao::ALLOWANCE] = 0;
-
+	protected function beforeInsert() {
 		$date = gmdate('Y-m-d H:i:s');
-		$this->var[RuleThrottlingDao::CREATETIME] = $date;
-		$this->var[RuleThrottlingDao::MODIFIEDTIME] = $date;
+		$this->setCreateTime($date);
+		$this->setModifiedTime($date);
 	}
 
 	protected function beforeUpdate() {
 		$date = gmdate('Y-m-d H:i:s');
-		$this->var[RuleThrottlingDao::MODIFIEDTIME] = $date;
-	}
-
-	public function getShardDomain() {
-		return RuleThrottlingDao::SHARDDOMAIN;
-	}
-
-	public function getTableName() {
-		return RuleThrottlingDao::TABLE;
-	}
-
-	public function getIdColumnName() {
-		return RuleThrottlingDao::IDCOLUMN;
+		$this->setModifiedTime($date);
 	}
 
 	protected function isShardBaseObject() {

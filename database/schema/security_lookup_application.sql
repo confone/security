@@ -1,43 +1,43 @@
-CREATE TABLE {$dbName}.account_application
+CREATE TABLE {$dbName}.lookup_user_application
 (
 	id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	account_id INT(10) UNSIGNED,
-	application_id INT(10) UNSIGNED,
+	user_id INT(10) UNSIGNED,
+	app_id INT(10) UNSIGNED,
 
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-CREATE INDEX account_application_account_id_index ON {$dbName}.account_application (account_id);
-CREATE INDEX account_application_application_id_index ON {$dbName}.account_application (application_id);
+CREATE INDEX user_application_user_id_index ON {$dbName}.lookup_user_application (user_id);
+CREATE INDEX user_application_app_id_index ON {$dbName}.lookup_user_application (app_id);
 
 
-CREATE TABLE {$dbName}.publickey_application
+CREATE TABLE {$dbName}.lookup_pubkey_application
 (
 	id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	public_key VARCHAR(41),
-	application_id INT(10) UNSIGNED,
+	pub_key VARCHAR(41),
+	app_id INT(10) UNSIGNED,
 
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-CREATE INDEX publickey_application_public_key_index ON {$dbName}.publickey_application (public_key(40));
-CREATE INDEX publickey_application_application_id_index ON {$dbName}.publickey_application (application_id);
+CREATE INDEX pubkey_application_pub_key_index ON {$dbName}.lookup_pubkey_application (pub_key(40));
+CREATE INDEX pubkey_application_app_id_index ON {$dbName}.lookup_pubkey_application (app_id);
 
 
-CREATE TABLE {$dbName}.privatekey_application
+CREATE TABLE {$dbName}.lookup_prikey_application
 (
 	id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	private_key VARCHAR(41),
-	application_id INT(10) UNSIGNED,
+	pri_key VARCHAR(41),
+	app_id INT(10) UNSIGNED,
 
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-CREATE INDEX privatekey_application_private_key_index ON {$dbName}.privatekey_application (private_key(40));
-CREATE INDEX privatekey_application_application_id_index ON {$dbName}.privatekey_application (application_id);
+CREATE INDEX prikey_application_pri_key_index ON {$dbName}.lookup_prikey_application (pri_key(40));
+CREATE INDEX prikey_application_app_id_index ON {$dbName}.lookup_prikey_application (app_id);
 
 
-INSERT INTO privatekey_application (private_key, application_id)
+INSERT INTO lookup_prikey_application (pri_key, app_id)
 VALUES ('b1d6771652e4ed621de446b2c721d435', 1);
 
 

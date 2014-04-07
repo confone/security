@@ -59,15 +59,4 @@ $dbconfig['security_rule'] =
 			'localhost' => array('min'=>0, 'max'=>0)
 		) 
 	);
-
-$dbconfig['security_rule_cache'] =
-	array (
-		'total_shards' => 1,
-		'shards_digit' => 1,
-		'username' => 'securityuser',
-		'password' => 'password',
-		'server_list' => array (
-			'localhost' => array('min'=>0, 'max'=>0)
-		) 
-	);
 ?>
