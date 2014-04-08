@@ -63,6 +63,11 @@ class SSession {
 		}
 	}
 
+	public function exist($key) {
+		$session = $this->sessionCache->get($this->sessionId);
+		return isset($session[$key]);
+	}
+
 	public function destroy() {
 		$this->sessionCache->delete($this->sessionId);
 	}

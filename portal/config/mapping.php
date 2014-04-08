@@ -1,3 +1,3 @@
 <?php
-register('/login', new LoginController());
+register('/application/list', new ApplicationListController());
 ?>
