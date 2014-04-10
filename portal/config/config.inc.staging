@@ -1,6 +1,6 @@
 <?php 
-$base_host = 'http://staging.security.confone.com';
-$account_url = 'http://staging.account.confone.com';
+$base_host = 'https://staging.security.confone.com';
+$account_url = 'https://staging.account.confone.com';
 
 // =======================================================================================
 // auto include directory information
