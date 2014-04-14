@@ -1,5 +1,5 @@
 <?php
-abstract class RuleThrottlingDaoParent extends SecurityDaoBase {
+abstract class RuleThrottlingDaoParent extends AccountDaoBase {
 
     protected function init() {
         $this->var['id'] = '';
@@ -7,6 +7,7 @@ abstract class RuleThrottlingDaoParent extends SecurityDaoBase {
         $this->var['description'] = '';
         $this->var['duration'] = '';
         $this->var['allowance'] = '';
+        $this->var['wait_time'] = '';
         $this->var['create_time'] = '';
         $this->var['modified_time'] = '';
 
@@ -15,6 +16,7 @@ abstract class RuleThrottlingDaoParent extends SecurityDaoBase {
         $this->update['description'] = false;
         $this->update['duration'] = false;
         $this->update['allowance'] = false;
+        $this->update['wait_time'] = false;
         $this->update['create_time'] = false;
         $this->update['modified_time'] = false;
     }
@@ -53,6 +55,14 @@ abstract class RuleThrottlingDaoParent extends SecurityDaoBase {
     }
     public function getAllowance() {
         return $this->var['allowance'];
+    }
+
+    public function setWaitTime($waitTime) {
+        $this->var['wait_time'] = $waitTime;
+        $this->update['wait_time'] = true;
+    }
+    public function getWaitTime() {
+        return $this->var['wait_time'];
     }
 
     public function setCreateTime($createTime) {
