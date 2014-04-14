@@ -111,20 +111,18 @@ class QueryBuilder {
 		return $this;
 	}
 
-	public function desc() {
-		$this->query.= " DESC";
-
-		return $this;
-	}
-
 	public function limit($start, $size) {
 		$this->query.= " LIMIT $start, $size";
 
 		return $this;
 	}
 
-	public function order($field) {
+	public function order($field, $desc=false) {
 		$this->query.= " ORDER BY $field";
+
+		if ($desc) {
+			$this->query.= " DESC";
+		}
 
 		return $this;
 	}

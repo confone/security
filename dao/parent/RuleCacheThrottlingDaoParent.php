@@ -1,5 +1,5 @@
 <?php
-abstract class RuleCacheThrottlingDaoParent extends AccountDaoBase {
+abstract class RuleCacheThrottlingDaoParent extends SecurityDaoBase {
 
     protected function init() {
         $this->var['id'] = '';

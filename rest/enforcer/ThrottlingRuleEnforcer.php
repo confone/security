@@ -2,29 +2,51 @@
 class ThrottlingRuleEnforcer extends Enforcer {
 
 	public function enforce() {
-		$rule = $this->getRuleObj();
 		$subject = $this->getSubject();
+		$rule = $this->getRuleObj();
+
+		$end = strtotime('now');
+		
 
 		$ruleId = $rule->getId();
-		$end = strtotime('now');
-		$duration = $rule->getDuration();
-		$start = $end - $duration;
+		$waitTime = $rule->getWaitTime();
 
-		try {
-			$count = RuleCacheThrottlingDao::countSubject($ruleId, $subject, $start, $end);
+		$mem = CacheUtil::getInstance();
+		$waitFlag = $mem->get($ruleId.$subject);
 
-			$allowance = $rule->getAllowance();
+		if ($waitFlag) {
+			$waitFlag = !RuleCacheThrottlingDao::passWaitTime($ruleId, $subject, $end, $waitTime);
+			if (!$waitFlag) {
+				$mem->set($ruleId.$subject, 0);
+			} else {
+				$valid = false;
+			}
+		}
 
-			$valid = ($count < $allowance);
+		if (!$waitFlag) {
+			$duration = $rule->getDuration();
+			$start = $end - $duration;
 
-			$cache = new RuleCacheThrottlingDao();
-			$cache->setRuleId($ruleId);
-			$cache->setSubject($subject);
-			$cache->setTime($end);
-			$cache->save();
+			try {
+				$count = RuleCacheThrottlingDao::countSubject($ruleId, $subject, $start, $end);
 
-			RuleCacheThrottlingDao::removeOldCache($ruleId, $subject, $start);
-		} catch (Exception $e) { $valid = true; }
+				$allowance = $rule->getAllowance();
+
+				$valid = ($count < $allowance);
+
+				$cache = new RuleCacheThrottlingDao();
+				$cache->setRuleId($ruleId);
+				$cache->setSubject($subject);
+				$cache->setTime($end);
+				$cache->save();
+
+				RuleCacheThrottlingDao::removeOldCache($ruleId, $subject, $start);
+			} catch (Exception $e) { $valid = true; }
+
+			if (!$valid) {
+				$mem->set($ruleId.$subject, 1);
+			}
+		}
 
 		return $valid;
 	}

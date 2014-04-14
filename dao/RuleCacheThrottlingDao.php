@@ -10,11 +10,26 @@ class RuleCacheThrottlingDao extends RuleCacheThrottlingDaoParent {
 		$builder = new QueryBuilder($cache);
 		$res = $builder->select('COUNT(*) as count')
 					   ->where('subject', $subject)
+					   ->where('rule_id', $ruleId)
 					   ->where('time', $start, '>')
 					   ->where('time', $end, '<=')
 					   ->find();
 
 		return $res['count'];
+	}
+
+	public static function passWaitTime($ruleId, $subject, $now, $waitTime) {
+		$cache = new RuleCacheThrottlingDao();
+		$cache->setServerAddress($ruleId);
+
+		$builder = new QueryBuilder($cache);
+		$res = $builder->select('*')
+					   ->where('subject', $subject)
+					   ->where('rule_id', $ruleId)
+					   ->order('id', true)
+					   ->find();
+Logger::info('now:'.$now.' time:'.$res['time'].' wait:'.$waitTime);
+		return ($now-$res['time']) > $waitTime;
 	}
 
 	public static function removeOldCache($ruleId, $subject, $cutOff) {
