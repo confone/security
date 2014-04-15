@@ -8,7 +8,10 @@ $autoload_dirs = array( '../util',
                         '../dao',
                         '../dao/parent',
 						'controller',
-						'controller/application' );
+						'controller/application',
+						'controller/howto',
+						'controller/page',
+						'controller/rule' );
 
 
 //=======================================================================================
