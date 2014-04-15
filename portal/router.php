@@ -38,10 +38,7 @@ if (!empty($uri)) {
     }
 }
 
-if (is_dir($uri) || empty($uri)) {
-	header('Location: '.$uri.'/index');
-	exit;
-}
+if (empty($uri)) { $uri = '/index'; }
 
 $uris = explode('/', $uri);
 foreach ($services as $key=>$val) {
