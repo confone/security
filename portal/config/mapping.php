@@ -1,4 +1,6 @@
 <?php
+register('/index', new SecurityHomeController());
+
 register('/application/list',   new ApplicationListController());
 register('/application/detail', new ApplicationDetailController());
 
