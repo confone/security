@@ -22,7 +22,7 @@ abstract class ViewController {
 	public function execute() {
 		if ($this->checkLogin()) {
 			global $base_host, $account_url, $_SSESSION, $_URI;
-			if (!$_SSESSION->exist(SSession::$AUTHINDEX)) {
+			if (!$_SSESSION->hasUserId()) {
 				$this->redirect($account_url.'/login?redirect_uri='.$base_host.$_URI);
 			}
 		}
