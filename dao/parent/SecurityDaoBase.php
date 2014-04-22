@@ -62,6 +62,15 @@ abstract class SecurityDaoBase {
 	}
 
 	/**
+	 * Delete the object form database
+	 */
+	public function delete() {
+		$this->doDelete();
+		$this->fromdb = false;
+		$this->var[$this->getIdColumnName()] = 0;
+	}
+
+	/**
 	 * 
 	 * Retrive an object from database based on id
 	 * @param $id - the database primary key id
@@ -149,7 +158,8 @@ abstract class SecurityDaoBase {
 	public function setServerAddress($shardSequence) {
 		global $dbconfig;
 		$domain = $this->getShardDomain();
-		$this->shardId = $shardSequence%$dbconfig[$domain]['total_shards'];
+		$digitOff = $shardSequence%$dbconfig[$domain]['shards_digit'];
+		$this->shardId = $digitOff%$dbconfig[$domain]['total_shards'];
 		$this->serverAddress = $this->getConfigServerAddress($domain, $this->shardId);
 	}
 
@@ -194,7 +204,7 @@ abstract class SecurityDaoBase {
 		$dbName = $this->getShardedDatabaseName();
 		$tableName = $this->getTableName();
 
-		$sequenceKey = $dbName.'.'.$tableName.SecurityDaoBase::SEQUENCE;
+		$sequenceKey = $dbName.'.'.$tableName.self::SEQUENCE;
 
 		$mem = CacheUtil::getInstance();
 
@@ -209,7 +219,7 @@ abstract class SecurityDaoBase {
 	}
 
 	private function getNextShardSequence() {
-		$sequenceKey = $this->getShardDomain().SecurityDaoBase::SEQUENCE;
+		$sequenceKey = $this->getShardDomain().self::SEQUENCE;
 
 		$mem = CacheUtil::getInstance();
 
@@ -256,6 +266,8 @@ abstract class SecurityDaoBase {
     protected function beforeUpdate() {}
 
     protected function beforeInsert() {}
+
+    protected function doDelete() {}
 
 //========================================================= abstract functions =============================================================
 
