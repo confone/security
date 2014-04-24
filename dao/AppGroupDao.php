@@ -27,9 +27,23 @@ class AppGroupDao extends AppGroupDaoParent {
 		$builder = new QueryBuilder($appGroup);
 		$rows = $builder->select('*')
 						->where('app_id', $appId)
-						->find();
+						->findList();
 
 		return SecurityDaoBase::makeObjectsFromSelectListResult($rows, 'AppGroupDao');
+	}
+
+	public static function getAppGroupByAppIdAndGroupId($appId, $groupId) {
+		$appGroup = new AppGroupDao();
+		$sequence = $appId;
+		$appGroup->setServerAddress($sequence);
+
+		$builder = new QueryBuilder($appGroup);
+		$res = $builder->select('*')
+					   ->where('app_id', $appId)
+					   ->where('id', $groupId)
+					   ->find();
+
+		return SecurityDaoBase::makeObjectFromSelectResult($res, 'AppGroupDao');
 	}
 
 // ============================================ override functions ==================================================

@@ -9,7 +9,12 @@ class Group extends Model {
 		return $this->dao->getId();
 	}
 	protected function init() {
-		$this->dao = $this->getInput();
+		$input = $this->getInput();
+		if (is_array($input)) {
+			$this->dao = AppGroupDao::getAppGroupByAppIdAndGroupId($input[0], $input[1]);
+		} else {
+			$this->dao = $this->getInput();
+		}
 	}
 	public function persist() {
 		$this->dao->save();

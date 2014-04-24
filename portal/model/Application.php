@@ -75,6 +75,11 @@ class Application extends Model {
     	return $this->groups;
     }
 
+    public function isAvailableToUser($userId) {
+    	$access = LookupUserApplicationDao::getUserAccessLevelOnProject($this->getId(), $userId);
+    	return $access != ApplicationDao::ACCESSLEVEL_NONE;
+    }
+
     public function getUserId() {
         return $this->dao->getUserId();
     }

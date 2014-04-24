@@ -33,10 +33,10 @@ class User extends Model {
 
 	public function getApplications() {
 		if (empty($this->applications)) {
-			$lookups = LookupUserApplicationDao::getApplicationIdsByUserId($this->getId());
-			foreach ($lookups as $lookup) {
-				$application = new ApplicationDao($lookup->getAppId());
-				$this->applications[$lookup->getAppId()] = new Application($application);
+			$appIds = LookupUserApplicationDao::getApplicationIdsByUserId($this->getId());
+			foreach ($appIds as $appId) {
+				$application = new ApplicationDao($appId);
+				$this->applications[$appId] = new Application($application);
 			}
 		}
 

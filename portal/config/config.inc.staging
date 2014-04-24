@@ -11,7 +11,8 @@ $autoload_dirs = array( '../util',
 						'controller/application',
 						'controller/howto',
 						'controller/page',
-						'controller/rule' );
+						'controller/rule',
+						'model' );
 
 
 //=======================================================================================

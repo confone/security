@@ -3,6 +3,7 @@ CREATE TABLE {$dbName}.lookup_user_application
 	id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	user_id INT(10) UNSIGNED,
 	app_id INT(10) UNSIGNED,
+	access_level TINYINT,
 
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;

@@ -5,10 +5,12 @@ abstract class LookupUserApplicationDaoParent extends SecurityDaoBase {
         $this->var['id'] = '';
         $this->var['user_id'] = '';
         $this->var['app_id'] = '';
+        $this->var['access_level'] = '';
 
         $this->update['id'] = false;
         $this->update['user_id'] = false;
         $this->update['app_id'] = false;
+        $this->update['access_level'] = false;
     }
 
     public function getId() {
@@ -29,6 +31,14 @@ abstract class LookupUserApplicationDaoParent extends SecurityDaoBase {
     }
     public function getAppId() {
         return $this->var['app_id'];
+    }
+
+    public function setAccessLevel($accessLevel) {
+        $this->var['access_level'] = $accessLevel;
+        $this->update['access_level'] = true;
+    }
+    public function getAccessLevel() {
+        return $this->var['access_level'];
     }
 
 // ======================================================================================== override
