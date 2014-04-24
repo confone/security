@@ -22,6 +22,10 @@ New Rule:
 <input type="button" onclick="javascript:addNewRule('<?=$base_host ?>')" class="button" value="Add" />
 </div>
 <div>
+Public Key: <?=$application->getPublicKey() ?><br>
+Private Key: <?=$application->getPrivateKey() ?>
+</div>
+<div>
 Groups:<br>
 <?php foreach ($application->getGroups() as $group) { ?>
 <div><a href="/application/group?application_id=<?=$application->getId() ?>&id=<?=$group->getId() ?>"><?=$group->getGroupName(); ?></a></div>
