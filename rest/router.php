@@ -5,7 +5,6 @@ date_default_timezone_set('America/Vancouver');
 blockIp();
 $services = array('GET'=>array(), 'POST'=>array(), 'PUT'=>array(), 'DELETE'=>array());
 include 'config/mapping.php';
-global $_APPLICATION;
 
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
@@ -151,19 +150,19 @@ function parseGetparams($uri) {
  * Function validates all neccessary headers incluidng app-key and Content-Type
  */
 function validateHeaders() {
-    global $_APPLICATION;
+    global $_APPLICATIONID, $_GROUPID;
 
     $headers = apache_request_headers();
 
     if (isset($headers['private-key'])) {
-        $_APPLICATION = ApplicationDao::getApplicationByPrivateKey($headers['private-key']);
+        $_APPLICATIONID = ApplicationDao::getApplicationIdByPrivateKey($headers['private-key']);
     } else {
         if (strpos($_SERVER['REQUEST_URI'], 'display')!==FALSE) {
             return;
         }
     }
 
-    if (!$_APPLICATION) {
+    if (!$_APPLICATIONID) {
         header('HTTP/1.0 401 Unauthorized');
         echo '{"error":"401 Unauthorized"}';
         exit;
@@ -174,6 +173,20 @@ function validateHeaders() {
         header('HTTP/1.0 406 Not Acceptable');
         echo '{"error":"406 Not Acceptable"}';
         exit;
+    }
+
+    if (!isset($headers['group-name'])) {
+        header('HTTP/1.0 417 Expectation Failed');
+        echo '{"error":"missing header group-name"}';
+        exit;
+    } else {
+   		$_GROUPID = AppGroupDao::getGroupIdByAppIdAndGroupName ( 
+	   							$_APPLICATIONID, $headers['group-name'] );
+   		if ($_GROUPID==-1) {
+	        header('HTTP/1.0 409 Conflict');
+	        echo '{"error":"Invalid group-name"}';
+	        exit;
+   		}
     }
 }
 ?>

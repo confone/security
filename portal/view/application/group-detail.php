@@ -18,7 +18,7 @@ New Rule:
 Application Group: <?=$group->getGroupName() ?><br>
 Rules:
 <?php foreach ($group->getRules() as $rule) { ?>
-<div><a href="/rule/detail?application_id=<?=$applicationId ?>&id=<?=$rule->getId() ?>"><?=$rule->getName(); ?></a></div>
+<div><a href="<?=$rule->getUrl() ?>&application_id=<?=$applicationId ?>"><?=$rule->getName(); ?></a></div>
 <?php } ?>
 <?php 
 include 'view/include/footer.php';

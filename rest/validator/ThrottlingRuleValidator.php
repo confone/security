@@ -13,19 +13,11 @@ class ThrottlingRuleValidator extends Validator {
     		return $valid;
     	}
 
-    	$headers = apache_request_headers();
-
-    	$valid = isset($headers['private-key']);
-    	if (!$valid) {
-    		header('HTTP/1.0 417 Expectation Failed');
-    		$this->setErrorMessage('missing header private-key');
-    		return $valid;
-    	}
+    	global $_APPLICATIONID, $_GROUPID;
 
     	$this->rules = array();
 
-    	global $_APPLICATION;
-    	$appRules = GroupRulesDao::getRulesByApplicationIdAndGroupId($_APPLICATION->getId(), 0);
+    	$appRules = GroupRulesDao::getRulesByApplicationIdAndGroupId($_APPLICATIONID, $_GROUPID);
 
     	foreach ($appRules as $appRule) {
     		$ruleType = $appRule->getRuleType(); 

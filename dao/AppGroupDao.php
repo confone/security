@@ -46,6 +46,23 @@ class AppGroupDao extends AppGroupDaoParent {
 		return SecurityDaoBase::makeObjectFromSelectResult($res, 'AppGroupDao');
 	}
 
+	public static function getGroupIdByAppIdAndGroupName($appId, $groupName) {
+		$appGroup = new AppGroupDao();
+		$sequence = $appId;
+		$appGroup->setServerAddress($sequence);
+
+		$builder = new QueryBuilder($appGroup);
+		$res = $builder->select('id')
+					   ->where('app_id', $appId)
+					   ->where('group_name', $groupName)
+					   ->find();
+		if ($res) {
+			return $res['id'];
+		} else {
+			return -1;
+		}
+	}
+
 // ============================================ override functions ==================================================
 
 	protected function beforeInsert() {

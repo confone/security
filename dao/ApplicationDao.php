@@ -9,11 +9,11 @@ class ApplicationDao extends ApplicationDaoParent {
 
 // =============================================== public function =================================================
 
-	public static function getApplicationByPrivateKey($privateKey) {
+	public static function getApplicationIdByPrivateKey($privateKey) {
 		$applicationId = LookupPrikeyApplicationDao::getApplicationIdsByPrivateKey($privateKey);
 
 		if ($applicationId!=0) {
-			return new ApplicationDao($applicationId);
+			return $applicationId;
 		} else {
 			return null;
 		}
