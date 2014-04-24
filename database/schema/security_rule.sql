@@ -12,9 +12,6 @@ CREATE TABLE {$dbName}.rule_throttling
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-INSERT INTO rule_throttling (name, description, duration, allowance, wait_time, create_time, modified_time)
-VALUES ('test-throttling', '', 10, 3, 10, NOW(), NOW());
-
 
 CREATE TABLE {$dbName}.rule_cache_throttling
 (
