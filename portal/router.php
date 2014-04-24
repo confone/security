@@ -105,7 +105,7 @@ function param($key) {
 		if (isset($_PARAM[$key])) {
 			return $_PARAM[$key];
 		} else {
-			return '';
+			return null;
 		}
 	}
 }

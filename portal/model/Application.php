@@ -23,7 +23,7 @@ class Application extends Model {
 	}
 
 	public function addRule($input, $type, $isRootGroup=false) {
-		if ($type==GroupRulesDao::RULE_TYPE_THROTTLING) {
+		if ($type==RuleThrottling::TYPE) {
 			$ruleDao = new RuleThrottlingDao();
 			$ruleDao->setName($input['name']);
 			$ruleDao->setDuration($input['duration']);
@@ -34,7 +34,7 @@ class Application extends Model {
 		}
 
 		if ($isRootGroup) {
-			$this->getRootGroup()->addRule($ruleDao->getId());
+			$this->getRootGroup()->addRule($ruleDao->getId(), $type);
 		}
 
 		return $ruleDao->getId();
@@ -68,11 +68,17 @@ class Application extends Model {
     	if (empty($this->groups)) {
     		$appGroups = AppGroupDao::getApplicationGroups($this->getId());
     		foreach ($appGroups as $appGroup) {
-    			array_push($this->groups, new Group($appGroup));
+    			if ($appGroup->getGroupName()!=AppGroupDao::ROOT_GROUP) {
+    				array_push($this->groups, new Group($appGroup));
+    			}
     		}
     	}
 
     	return $this->groups;
+    }
+
+    public function hasRule($ruleId) {
+    	return GroupRulesDao::isRuleInApplication($ruleId, $this->getId());
     }
 
     public function isAvailableToUser($userId) {

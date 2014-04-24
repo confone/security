@@ -2,15 +2,18 @@
 $stylesheets = array('application.css');
 $scripts = array('application.js');
 
+global $base_host;
+
 include 'view/include/header.php';
 ?>
 <div class="add_rule">
-<form action="/rule/new" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-<input type="text" name="code" placeholder="(Image Code)" />
-<input type="hidden" name="group_id" value="<?=$group->getId() ?>" />
-<input type="hidden" name="application_id" value="<?=$applicationId ?>" />
-<input type="submit" class="button" value="Submit" />
-</form>
+New Rule: 
+<select id="rule_type">
+<option value="throttling">Throttling</option>
+</select>
+<input type="hidden" id="group_id" value="<?=$group->getId() ?>" />
+<input type="hidden" id="application_id" value="<?=$applicationId ?>" />
+<input type="button" onclick="javascript:addNewRule('<?=$base_host ?>')" class="button" value="Add" />
 </div>
 Application Group: <?=$group->getGroupName() ?><br>
 Rules:

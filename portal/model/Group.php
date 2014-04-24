@@ -21,7 +21,7 @@ class Group extends Model {
 	}
 
 	public function addRule($ruleId, $type) {
-		if ($type==GroupRulesDao::RULE_TYPE_THROTTLING) {
+		if ($type==RuleThrottling::TYPE) {
 			$ruleDao = new RuleThrottlingDao($ruleId);
 		}
 
@@ -38,12 +38,14 @@ class Group extends Model {
 
 	public function getRules() {
 		if (empty($this->rules)) {
-			$groupRule = GroupRulesDao::getRulesByApplicationIdAndGroupId ( 
+			$groupRules = GroupRulesDao::getRulesByApplicationIdAndGroupId ( 
 									$this->dao->getAppId(), $this->dao->getId() );
 
-			if ($groupRule->getRuleType==GroupRulesDao::RULE_TYPE_THROTTLING) {
-				$rule = new RuleThrottling($groupRule->getRuleId());
-				$this->rules[$groupRule->getRuleOrder()] = $rule;
+			foreach ($groupRules as $groupRule) {
+				if ($groupRule->getRuleType()==GroupRulesDao::RULE_TYPE_THROTTLING) {
+					$rule = new RuleThrottling($groupRule->getRuleId());
+					$this->rules[$groupRule->getRuleOrder()] = $rule;
+				}
 			}
 		}
 

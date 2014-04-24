@@ -19,6 +19,19 @@ class GroupRulesDao extends GroupRulesDaoParent {
 		return SecurityDaoBase::makeObjectsFromSelectListResult($rows, 'GroupRulesDao');
 	}
 
+	public static function isRuleInApplication($ruleId, $applicationId) {
+		$rules = new GroupRulesDao();
+		$rules->setServerAddress($applicationId);
+
+		$builder = new QueryBuilder($rules);
+		$res = $builder->select('COUNT(*) as count')
+					   ->where('app_id', $applicationId)
+					   ->where('rule_id', $ruleId)
+					   ->find();
+
+		return $res['count']>0;
+	}
+
 	public function updateRuleOrder($order) {
 		if ($this->getRuleOrder()==$order) { return; }
 
@@ -59,6 +72,7 @@ class GroupRulesDao extends GroupRulesDaoParent {
 		$this->setCreateTime($date);
 		$this->setModifiedTime($date);
 		$this->setActive('Y');
+		$this->setRuleType(self::RULE_TYPE_THROTTLING);
 
 		$sequence = $this->getAppId();
 		$this->setShardId($sequence);
@@ -68,7 +82,7 @@ class GroupRulesDao extends GroupRulesDaoParent {
 					   ->where('app_id', $this->getAppId())
 					   ->where('group_id', $this->getGroupId())
 					   ->order('rule_order')
-					   ->findt();
+					   ->find();
 
 		$order = $res['count']+1;
 		$this->setRuleOrder($order);

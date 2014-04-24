@@ -1,6 +1,8 @@
 <?php
 class RuleThrottling extends Model {
 
+	const TYPE = 'RuleThrottling';
+
 	private $dao = null;
 
 	public function getId() {
@@ -16,6 +18,10 @@ class RuleThrottling extends Model {
 	}
 	public function persist() {
 		$this->dao->save();
+	}
+
+	public function getUrl() {
+		return '/rule/throttling?id='.$this->getId();
 	}
 
     public function getName() {
