@@ -16,8 +16,13 @@ class ApplicationDao extends ApplicationDaoParent {
 // ============================================ override functions ==================================================
 
 	protected function beforeInsert() {
+		$publicKey = 'pub_'.Utility::generateToken('_'.$this->getOwnerId().'_'.rand(0, 100).'_');
+		$privateKey = 'pri_'.Utility::generateToken('_'.$this->getOwnerId().'_'.rand(0, 100).'_');
+
 		$date = gmdate('Y-m-d H:i:s');
-		$this->var[ApplicationDao::CREATETIME] = $date;
+		$this->setCreateTime($date);
+		$this->setPublicKey($publicKey);
+		$this->setPrivateKey($privateKey);
 
 		$lookup = new LookupUserApplicationDao();
 		$lookup->setAppId($this->getId());
@@ -26,12 +31,12 @@ class ApplicationDao extends ApplicationDaoParent {
 
 		$lookup = new LookupPubkeyApplicationDao();
 		$lookup->setAppId($this->getId());
-		$lookup->setPubKey($this->getPublicKey());
+		$lookup->setPubKey($publicKey);
 		$lookup->save();
 
 		$lookup = new LookupPrikeyApplicationDao();
 		$lookup->setAppId($this->getId());
-		$lookup->setPriKey($this->getPrivateKey());
+		$lookup->setPriKey($privateKey);
 		$lookup->save();
 	}
 

@@ -1,18 +1,18 @@
 <?php
-abstract class ClientDaoParent extends SecurityDaoBase {
+abstract class AppGroupDaoParent extends SecurityDaoBase {
 
     protected function init() {
         $this->var['id'] = '';
-        $this->var['app_key'] = '';
-        $this->var['name'] = '';
-        $this->var['scope'] = '';
+        $this->var['app_id'] = '';
+        $this->var['group_name'] = '';
+        $this->var['active'] = '';
         $this->var['create_time'] = '';
         $this->var['modified_time'] = '';
 
         $this->update['id'] = false;
-        $this->update['app_key'] = false;
-        $this->update['name'] = false;
-        $this->update['scope'] = false;
+        $this->update['app_id'] = false;
+        $this->update['group_name'] = false;
+        $this->update['active'] = false;
         $this->update['create_time'] = false;
         $this->update['modified_time'] = false;
     }
@@ -21,28 +21,28 @@ abstract class ClientDaoParent extends SecurityDaoBase {
         return $this->var['id'];
     }
 
-    public function setAppKey($appKey) {
-        $this->var['app_key'] = $appKey;
-        $this->update['app_key'] = true;
+    public function setAppId($appId) {
+        $this->var['app_id'] = $appId;
+        $this->update['app_id'] = true;
     }
-    public function getAppKey() {
-        return $this->var['app_key'];
-    }
-
-    public function setName($name) {
-        $this->var['name'] = $name;
-        $this->update['name'] = true;
-    }
-    public function getName() {
-        return $this->var['name'];
+    public function getAppId() {
+        return $this->var['app_id'];
     }
 
-    public function setScope($scope) {
-        $this->var['scope'] = $scope;
-        $this->update['scope'] = true;
+    public function setGroupName($groupName) {
+        $this->var['group_name'] = $groupName;
+        $this->update['group_name'] = true;
     }
-    public function getScope() {
-        return $this->var['scope'];
+    public function getGroupName() {
+        return $this->var['group_name'];
+    }
+
+    public function setActive($active) {
+        $this->var['active'] = $active;
+        $this->update['active'] = true;
+    }
+    public function getActive() {
+        return $this->var['active'];
     }
 
     public function setCreateTime($createTime) {
@@ -64,7 +64,7 @@ abstract class ClientDaoParent extends SecurityDaoBase {
 // ======================================================================================== override
 
     public function getTableName() {
-        return 'client';
+        return 'app_group';
     }
 
     protected function getIdColumnName() {
@@ -72,7 +72,7 @@ abstract class ClientDaoParent extends SecurityDaoBase {
     }
 
     public function getShardDomain() {
-        return 'security_client';
+        return 'security_application';
     }
 }
 ?>

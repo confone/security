@@ -25,12 +25,12 @@ class ThrottlingRuleValidator extends Validator {
     	$this->rules = array();
 
     	global $_APPLICATION;
-    	$appRules = ApplicationRulesDao::getRulesByApplicationId($_APPLICATION->getId());
+    	$appRules = GroupRulesDao::getRulesByApplicationIdAndGroupId($_APPLICATION->getId(), 0);
 
     	foreach ($appRules as $appRule) {
     		$ruleType = $appRule->getRuleType(); 
 
-    		if ($ruleType == ApplicationRulesDao::RULE_TYPE_THROTTLING) {
+    		if ($ruleType == GroupRulesDao::RULE_TYPE_THROTTLING) {
     			$valid = true;
     			$rule = new RuleThrottlingDao($appRule->getRuleId());
     			array_push($this->rules, $rule);

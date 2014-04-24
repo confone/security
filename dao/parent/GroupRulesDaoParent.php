@@ -1,9 +1,10 @@
 <?php
-abstract class ApplicationRulesDaoParent extends SecurityDaoBase {
+abstract class GroupRulesDaoParent extends SecurityDaoBase {
 
     protected function init() {
         $this->var['id'] = '';
         $this->var['app_id'] = '';
+        $this->var['group_id'] = '';
         $this->var['rule_type'] = '';
         $this->var['rule_id'] = '';
         $this->var['rule_order'] = '';
@@ -13,6 +14,7 @@ abstract class ApplicationRulesDaoParent extends SecurityDaoBase {
 
         $this->update['id'] = false;
         $this->update['app_id'] = false;
+        $this->update['group_id'] = false;
         $this->update['rule_type'] = false;
         $this->update['rule_id'] = false;
         $this->update['rule_order'] = false;
@@ -31,6 +33,14 @@ abstract class ApplicationRulesDaoParent extends SecurityDaoBase {
     }
     public function getAppId() {
         return $this->var['app_id'];
+    }
+
+    public function setGroupId($groupId) {
+        $this->var['group_id'] = $groupId;
+        $this->update['group_id'] = true;
+    }
+    public function getGroupId() {
+        return $this->var['group_id'];
     }
 
     public function setRuleType($ruleType) {
@@ -84,7 +94,7 @@ abstract class ApplicationRulesDaoParent extends SecurityDaoBase {
 // ======================================================================================== override
 
     public function getTableName() {
-        return 'application_rules';
+        return 'group_rules';
     }
 
     protected function getIdColumnName() {
