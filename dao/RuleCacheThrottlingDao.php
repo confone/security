@@ -28,7 +28,7 @@ class RuleCacheThrottlingDao extends RuleCacheThrottlingDaoParent {
 					   ->where('rule_id', $ruleId)
 					   ->order('id', true)
 					   ->find();
-Logger::info('now:'.$now.' time:'.$res['time'].' wait:'.$waitTime);
+
 		return ($now-$res['time']) > $waitTime;
 	}
 

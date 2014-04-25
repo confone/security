@@ -9,7 +9,16 @@ class GroupRuleHandler extends Handler {
 		$errors = array();
 		foreach ($rules as $rule) {
 			if ($rule instanceof RuleThrottlingDao) {
-				$enforcher = new ThrottlingRuleEnforcer($rule, $body[$rule->getName()]);
+				$subject = $body[$rule->getName()];
+				$enforcher = new ThrottlingRuleEnforcer($rule, $subject);
+			} 
+			else if ($rule instanceof RuleBlacklistDao) {
+				$subject = $body[$rule->getName()];
+				$enforcher = new BlacklistRuleEnforcer($rule, $subject);
+			} 
+			else if ($rule instanceof RuleWhitelistDao) {
+				$subject = $body[$rule->getName()];
+				$enforcher = new WhitelistRuleEnforcer($rule, $subject);
 			}
 
 			if (!$enforcher->enforce()) {
