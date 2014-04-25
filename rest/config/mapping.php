@@ -1,3 +1,3 @@
 <?php
-register('POST', '/enforce/:subject', new ThrottlingRuleHandler(), new ThrottlingRuleValidator());
+register('POST', '/enforce/:groupname', new GroupRuleHandler(), new GroupRuleValidator());
 ?>

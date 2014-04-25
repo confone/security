@@ -1,5 +1,5 @@
 <?php
-class ThrottlingRuleHandler extends Handler {
+class GroupRuleHandler extends Handler {
 
 	protected function handle($params) {
 		$body = Utility::getJsonRequestData();
@@ -9,7 +9,7 @@ class ThrottlingRuleHandler extends Handler {
 		$errors = array();
 		foreach ($rules as $rule) {
 			if ($rule instanceof RuleThrottlingDao) {
-				$enforcher = new ThrottlingRuleEnforcer($rule, $params['subject']);
+				$enforcher = new ThrottlingRuleEnforcer($rule, $body[$rule->getName()]);
 			}
 
 			if (!$enforcher->enforce()) {

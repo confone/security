@@ -150,7 +150,7 @@ function parseGetparams($uri) {
  * Function validates all neccessary headers incluidng app-key and Content-Type
  */
 function validateHeaders() {
-    global $_APPLICATIONID, $_GROUPID;
+    global $_APPLICATIONID;
 
     $headers = apache_request_headers();
 
@@ -173,20 +173,6 @@ function validateHeaders() {
         header('HTTP/1.0 406 Not Acceptable');
         echo '{"error":"406 Not Acceptable"}';
         exit;
-    }
-
-    if (!isset($headers['group-name'])) {
-        header('HTTP/1.0 417 Expectation Failed');
-        echo '{"error":"missing header group-name"}';
-        exit;
-    } else {
-   		$_GROUPID = AppGroupDao::getGroupIdByAppIdAndGroupName ( 
-	   							$_APPLICATIONID, $headers['group-name'] );
-   		if ($_GROUPID==-1) {
-	        header('HTTP/1.0 409 Conflict');
-	        echo '{"error":"Invalid group-name"}';
-	        exit;
-   		}
     }
 }
 ?>

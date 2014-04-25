@@ -16,7 +16,7 @@ abstract class Handler {
                 }
                 else { 
                 	$response = array('status'=>'error','description'=>'invalid_json_format'); 
-                }  
+                }
             }
 
             $this->json = empty($_GET) ? $this->json : array_merge($_GET, $this->json);
@@ -45,6 +45,10 @@ abstract class Handler {
 
     protected function getValidator() {
     	return $this->validator;
+    }
+
+    protected function onValidationFailed() {
+    	return $this->validator->getMessage();
     }
 
     abstract protected function handle($params);
