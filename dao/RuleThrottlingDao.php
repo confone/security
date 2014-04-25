@@ -4,7 +4,7 @@ class RuleThrottlingDao extends RuleThrottlingDaoParent {
 // =============================================== public function =================================================
 
 	public function getErrorMessage() {
-		return 'Fail Throttling Rule - '.$this->getName();
+		return 'Throttling Rule';
 	}
 
 // ============================================ override functions ==================================================

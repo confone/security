@@ -4,7 +4,7 @@ class RuleWhitelistDao extends RuleWhitelistDaoParent {
 // =============================================== public function =================================================
 
 	public function getErrorMessage() {
-		return 'Fail Whitelist Rule - '.$this->getName();
+		return 'Whitelist Rule';
 	}
 
 // ============================================ override functions ==================================================

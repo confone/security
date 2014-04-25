@@ -20,7 +20,7 @@ class GroupRuleValidator extends Validator {
    		$valid = ($groupId>0);
     	if (!$valid) {
         	header('HTTP/1.0 404 Not Found');
-        	$this->setErrorMessage($input['groupname'].' does not exist');
+        	$this->setErrorMessage('\''.$input['groupname'].'\' does not exist');
     		return $valid;
    		}
 
@@ -51,7 +51,7 @@ class GroupRuleValidator extends Validator {
 
     		if (!$valid) {
     			header('HTTP/1.0 400 Bad Request');
-    			$this->setErrorMessage('missing parameter '.$rule->getName());
+    			$this->setErrorMessage('missing parameter \''.$rule->getName().'\'');
     			return $valid;
     		}
     	}

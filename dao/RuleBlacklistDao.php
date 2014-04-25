@@ -4,7 +4,7 @@ class RuleBlacklistDao extends RuleBlacklistDaoParent {
 // =============================================== public function =================================================
 
 	public function getErrorMessage() {
-		return 'Fail Blacklist Rule - '.$this->getName();
+		return 'Blacklist Rule';
 	}
 
 // ============================================ override functions ==================================================

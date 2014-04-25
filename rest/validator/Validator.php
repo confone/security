@@ -2,7 +2,7 @@
 abstract class Validator {
 
     private $toBeValidated = null;
-    private $message = array("status"=>"success","description"=>"OK");
+    private $message = array();
 
     public function getMessage() {
         return $this->message;
@@ -17,7 +17,7 @@ abstract class Validator {
     }
 
     protected function setErrorMessage($message) {
-        $this->message = array("status"=>"error","description"=>$message);
+        $this->message = array("status"=>"failed","description"=>$message);
     }
 
     protected function nonEmptyArrayIndex($indexes, $array) {
@@ -25,11 +25,11 @@ abstract class Validator {
         foreach ($indexes as $index) {
             if (!$valid) { break; }
             if (isset($array[$index])) {
-                $valid = $this->nonEmpty($array[$index], 'missing '.$index);
+                $valid = $this->nonEmpty($array[$index], 'missing \''.$index.'\'');
             } else {
                 $valid = false;
                 header('HTTP/1.0 400 Bad Request');
-                $this->setErrorMessage('missing '.$index);
+                $this->setErrorMessage('missing \''.$index.'\'');
             }
         }
         return $valid;

@@ -6,7 +6,7 @@ class GroupRuleHandler extends Handler {
 
 		$rules = $this->getValidator()->getRules();
 
-		$errors = array();
+		$failures = array();
 		foreach ($rules as $rule) {
 			if ($rule instanceof RuleThrottlingDao) {
 				$subject = $body[$rule->getName()];
@@ -22,14 +22,14 @@ class GroupRuleHandler extends Handler {
 			}
 
 			if (!$enforcher->enforce()) {
-				array_push($errors, $rule->getErrorMessage());
+				$failures[$rule->getName()] = $rule->getErrorMessage();
 			}
 		}
 
-		if (empty($errors)) {
+		if (empty($failures)) {
 			return array('status'=>'success');
 		} else {
-			return array('status'=>'error', 'description'=>$errors);
+			return array('status'=>'failed', 'rules'=>$failures);
 		}
 	}
 }
