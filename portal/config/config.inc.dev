@@ -12,6 +12,9 @@ $autoload_dirs = array( '../util',
 						'controller/howto',
 						'controller/page',
 						'controller/rule',
+						'controller/rule/throttling',
+						'controller/rule/blacklist',
+						'controller/rule/whitelist',
 						'model' );
 
 

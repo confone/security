@@ -5,7 +5,7 @@ class WhitelistRuleEnforcer extends Enforcer {
 		$subject = $this->getSubject();
 		$rule = $this->getRuleObj();
 
-		return RuleCacheWhitelistDao::validateSubjectInRule($subject, $rule->getId());
+		return !RuleCacheWhitelistDao::subjectExistInRule($subject, $rule->getId());
 	}
 }
 ?>

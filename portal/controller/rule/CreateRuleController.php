@@ -7,6 +7,7 @@ class CreateRuleController extends ViewController {
 		global $_SSESSION;
 		$application = new Application($applicationId);
 
+		$redirectUri = '/application/detail?id='.$applicationId;
 		if ($application->isAvailableToUser($_SSESSION->getUserId())) {
 			$type = param('type');
 
@@ -18,12 +19,25 @@ class CreateRuleController extends ViewController {
 				switch ($type) {
 					case RuleThrottling::TYPE :
 						$hasRuleType = true;
-
 						$input = array();
 						$input['name'] = param('name');
 						$input['duration'] = param('duration');
 						$input['allowance'] = param('allowance');
 						$input['wait_time'] = param('wait_time');
+						$input['description'] = param('description');
+					break;
+
+					case RuleBlacklist::TYPE :
+						$hasRuleType = true;
+						$input = array();
+						$input['name'] = param('name');
+						$input['description'] = param('description');
+					break;
+
+					case RuleWhitelist::TYPE :
+						$hasRuleType = true;
+						$input = array();
+						$input['name'] = param('name');
 						$input['description'] = param('description');
 					break;
 				}

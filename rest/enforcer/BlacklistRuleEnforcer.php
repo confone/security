@@ -5,7 +5,7 @@ class BlacklistRuleEnforcer extends Enforcer {
 		$subject = $this->getSubject();
 		$rule = $this->getRuleObj();
 
-		return RuleCacheBlacklistDao::validateSubjectInRule($subject, $rule->getId());
+		return RuleCacheBlacklistDao::subjectExistInRule($subject, $rule->getId());
 	}
 }
 ?>

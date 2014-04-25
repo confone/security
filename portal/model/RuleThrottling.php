@@ -1,23 +1,10 @@
 <?php
-class RuleThrottling extends Model {
+class RuleThrottling extends ModelRule {
 
 	const TYPE = 'RuleThrottling';
 
-	private $dao = null;
-
-	public function getId() {
-		return $this->dao->getId();
-	}
-	protected function init() {
-		$input = $this->getInput();
-		if (is_numeric($input)) {
-			$this->dao = new RuleThrottlingDao($input);
-		} else {
-			$this->dao = $this->getInput();
-		}
-	}
-	public function persist() {
-		$this->dao->save();
+	protected function getDaoInstance($id) {
+		return new RuleThrottlingDao($id);
 	}
 
 	public function getUrl() {

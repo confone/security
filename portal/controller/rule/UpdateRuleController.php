@@ -29,6 +29,20 @@ class UpdateRuleController extends ViewController {
 						$rule->setDuration($duration);
 						$rule->setWaitTime($waitTime);
 					break;
+
+					case RuleBlacklist::TYPE :
+						$rule = new RuleBlacklist($id);
+
+						$description = param('description');
+						$rule->setDescription($description);
+					break;
+
+					case RuleWhitelist::TYPE :
+						$rule = new RuleWhitelist($id);
+
+						$description = param('description');
+						$rule->setDescription($description);
+					break;
 				}
 
 				if (isset($rule)) { 

@@ -8,9 +8,16 @@ function addNewRule(baseUrl) {
 
 	if (ruleType=='throttling') {
 		url = baseUrl+'/rule/throttling?application_id='+appId;
-		if (group) {
-			url = url+'&group_id='+groupId;
-		}
+	}
+	else if (ruleType=='blacklist') {
+		url = baseUrl+'/rule/blacklist?application_id='+appId;
+	}
+	else if (ruleType=='whitelist') {
+		url = baseUrl+'/rule/whitelist?application_id='+appId;
+	}
+
+	if (group) {
+		url = url+'&group_id='+groupId;
 	}
 
 	window.location.href = url;

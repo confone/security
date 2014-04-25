@@ -29,12 +29,24 @@ class GroupRuleValidator extends Validator {
     	$appRules = GroupRulesDao::getRulesByApplicationIdAndGroupId($_APPLICATIONID, $groupId);
 
     	foreach ($appRules as $appRule) {
-    		$ruleType = $appRule->getRuleType(); 
+    		switch ($appRule->getRuleType()) {
+    			case GroupRulesDao::RULE_TYPE_THROTTLING :
+	    			$rule = new RuleThrottlingDao($appRule->getRuleId());
+	    			$valid = !empty($input[$rule->getName()]);
+	    			array_push($this->rules, $rule);
+    			break;
 
-    		if ($ruleType == GroupRulesDao::RULE_TYPE_THROTTLING) {
-    			$rule = new RuleThrottlingDao($appRule->getRuleId());
-    			$valid = !empty($input[$rule->getName()]);
-    			array_push($this->rules, $rule);
+    			case GroupRulesDao::RULE_TYPE_BLACKLIST :
+	    			$rule = new RuleBlacklistDao($appRule->getRuleId());
+	    			$valid = !empty($input[$rule->getName()]);
+	    			array_push($this->rules, $rule);
+    			break;
+
+    			case GroupRulesDao::RULE_TYPE_WHITELIST :
+	    			$rule = new RuleWhitelistDao($appRule->getRuleId());
+	    			$valid = !empty($input[$rule->getName()]);
+	    			array_push($this->rules, $rule);
+    			break;
     		}
 
     		if (!$valid) {

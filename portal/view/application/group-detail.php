@@ -8,9 +8,7 @@ include 'view/include/header.php';
 ?>
 <div class="add_rule">
 New Rule: 
-<select id="rule_type">
-<option value="throttling">Throttling</option>
-</select>
+<?php include 'view/application/part/rule-select.php'; ?>
 <input type="hidden" id="group_id" value="<?=$group->getId() ?>" />
 <input type="hidden" id="application_id" value="<?=$applicationId ?>" />
 <input type="button" onclick="javascript:addNewRule('<?=$base_host ?>')" class="button" value="Add" />

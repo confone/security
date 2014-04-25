@@ -2,6 +2,8 @@
 class GroupRulesDao extends GroupRulesDaoParent {
 
 	const RULE_TYPE_THROTTLING = 'THROTTLING';
+	const RULE_TYPE_BLACKLIST = 'BLACKLIST';
+	const RULE_TYPE_WHITELIST = 'WHITELIST';
 
 // =============================================== public function =================================================
 
@@ -72,7 +74,6 @@ class GroupRulesDao extends GroupRulesDaoParent {
 		$this->setCreateTime($date);
 		$this->setModifiedTime($date);
 		$this->setActive('Y');
-		$this->setRuleType(self::RULE_TYPE_THROTTLING);
 
 		$sequence = $this->getAppId();
 		$this->setShardId($sequence);

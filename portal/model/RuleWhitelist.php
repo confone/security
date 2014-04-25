@@ -1,44 +1,63 @@
 <?php
-class RuleWhitelist extends Model {
+class RuleWhitelist extends ModelRule {
 
 	const TYPE = 'RuleWhitelist';
 
-	private $dao = null;
-
-	public function getId() {
-		return $this->dao->getId();
-	}
-	protected function init() {
-		$input = $this->getInput();
-		if (is_numeric($input)) {
-			$this->dao = new RuleWhitelistDao($input);
-		} else {
-			$this->dao = $this->getInput();
-		}
-	}
-	public function persist() {
-		$this->dao->save();
+	protected function getDaoInstance($id) {
+		return new RuleWhitelistDao($id);
 	}
 
 	public function getUrl() {
 		return '/rule/whitelist?id='.$this->getId();
 	}
 
+	public function addSubject($subject) {
+		$cache = new RuleCacheWhitelistDao();
+		$cache->setRuleId($this->getId());
+		$cache->setSubject($subject);
+		$cache->save();
+
+		if (!empty($this->subjects)) {
+			array_push($this->subjects, $subject);
+		}
+
+		return $cache->getId();
+	}
+
+	public function removeSubject($subject) {
+		RuleCacheWhitelistDao::removeSubjectInRule($subject, $this->getId());
+
+		if (!empty($this->subjects)) {
+			foreach ($this->subjects as $key=>$val) {
+				if ($val==$subject) {
+					unset($this->subjects[$key]);
+				}
+			}
+		}
+	}
+
+	public function getSubjects() {
+		if (empty($this->subjects)) {
+			$this->subjects = RuleCacheWhitelistDao::getSubjectsInRule($this->getId());
+		}
+
+		return $this->subjects;
+	}
+
     public function getName() {
-        return $this->var['name'];
+        return $this->dao->getName();
     }
     public function setDescription($description) {
-        $this->var['description'] = $description;
-        $this->update['description'] = true;
+        $this->dao->setDescription($description);
     }
     public function getDescription() {
-        return $this->var['description'];
+        return $this->dao->getDescription();
     }
     public function getCreateTime() {
-        return $this->var['create_time'];
+        return $this->dao->getCreateTime();
     }
     public function getModifiedTime() {
-        return $this->var['modified_time'];
+        return $this->dao->getModifiedTime();
     }
 }
 ?>

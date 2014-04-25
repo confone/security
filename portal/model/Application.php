@@ -23,14 +23,30 @@ class Application extends Model {
 	}
 
 	public function addRule($input, $type, $isRootGroup=false) {
-		if ($type==RuleThrottling::TYPE) {
-			$ruleDao = new RuleThrottlingDao();
-			$ruleDao->setName($input['name']);
-			$ruleDao->setDuration($input['duration']);
-			$ruleDao->setAllowance($input['allowance']);
-			$ruleDao->setWaitTime($input['wait_time']);
-			$ruleDao->setDescription($input['description']);
-			$ruleDao->save();
+		switch ($type) {
+			case RuleThrottling::TYPE :
+				$ruleDao = new RuleThrottlingDao();
+				$ruleDao->setName($input['name']);
+				$ruleDao->setDuration($input['duration']);
+				$ruleDao->setAllowance($input['allowance']);
+				$ruleDao->setWaitTime($input['wait_time']);
+				$ruleDao->setDescription($input['description']);
+				$ruleDao->save();
+			break;
+
+			case RuleBlacklist::TYPE :
+				$ruleDao = new RuleBlacklistDao();
+				$ruleDao->setName($input['name']);
+				$ruleDao->setDescription($input['description']);
+				$ruleDao->save();
+			break;
+
+			case RuleWhitelist::TYPE :
+				$ruleDao = new RuleWhitelistDao();
+				$ruleDao->setName($input['name']);
+				$ruleDao->setDescription($input['description']);
+				$ruleDao->save();
+			break;
 		}
 
 		if ($isRootGroup) {

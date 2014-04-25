@@ -21,11 +21,25 @@ class Group extends Model {
 	}
 
 	public function addRule($ruleId, $type) {
-		if ($type==RuleThrottling::TYPE) {
-			$ruleDao = new RuleThrottlingDao($ruleId);
+		$groupRule = new GroupRulesDao();
+
+		switch ($type) {
+			case RuleThrottling::TYPE :
+				$ruleDao = new RuleThrottlingDao($ruleId);
+				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_THROTTLING);
+			break;
+
+			case RuleBlacklist::TYPE :
+				$ruleDao = new RuleBlacklistDao($ruleId);
+				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_BLACKLIST);
+			break;
+
+			case RuleWhitelist::TYPE :
+				$ruleDao = new RuleWhitelistDao($ruleId);
+				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_WHITELIST);
+			break;
 		}
 
-		$groupRule = new GroupRulesDao();
 		$groupRule->setAppId($this->dao->getAppId());
 		$groupRule->setGroupId($this->getId());
 		$groupRule->setRuleId($ruleDao->getId());
@@ -42,10 +56,21 @@ class Group extends Model {
 									$this->dao->getAppId(), $this->dao->getId() );
 
 			foreach ($groupRules as $groupRule) {
-				if ($groupRule->getRuleType()==GroupRulesDao::RULE_TYPE_THROTTLING) {
-					$rule = new RuleThrottling($groupRule->getRuleId());
-					$this->rules[$groupRule->getRuleOrder()] = $rule;
+				switch ($groupRule->getRuleType()) {
+					case GroupRulesDao::RULE_TYPE_THROTTLING :
+						$rule = new RuleThrottling($groupRule->getRuleId());
+					break;
+
+					case GroupRulesDao::RULE_TYPE_BLACKLIST :
+						$rule = new RuleBlacklist($groupRule->getRuleId());
+					break;
+
+					case GroupRulesDao::RULE_TYPE_WHITELIST :
+						$rule = new RuleWhitelist($groupRule->getRuleId());
+					break;
 				}
+
+				$this->rules[$groupRule->getRuleOrder()] = $rule;
 			}
 		}
 
