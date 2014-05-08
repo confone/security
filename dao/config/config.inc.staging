@@ -7,53 +7,49 @@ if (!isset($dbconfig)) {
 
 $dbconfig['security_application'] =
 	array (
-		'total_shards' => 3,
+		'total_shards' => 4,
 		'shards_digit' => 10,
 		'username' => 'securityuser',
 		'password' => 'password',
 		'server_list' => array (
-			'192.168.175.105' => array('min'=>0, 'max'=>0),
-			'192.168.175.207' => array('min'=>1, 'max'=>1),
-			'192.168.175.236' => array('min'=>2, 'max'=>2)
+			'192.168.175.105' => array('min'=>0, 'max'=>1),
+			'192.168.175.236' => array('min'=>2, 'max'=>3)
 		) 
 	);
 
 $dbconfig['security_lookup_application'] =
 	array (
-		'total_shards' => 3,
+		'total_shards' => 4,
 		'shards_digit' => 10,
 		'username' => 'securityuser',
 		'password' => 'password',
 		'server_list' => array (
-			'192.168.175.105' => array('min'=>0, 'max'=>0),
-			'192.168.175.207' => array('min'=>1, 'max'=>1),
-			'192.168.175.236' => array('min'=>2, 'max'=>2)
+			'192.168.175.105' => array('min'=>0, 'max'=>1),
+			'192.168.175.236' => array('min'=>2, 'max'=>3)
 		) 
 	);
 
 $dbconfig['security_iterm'] =
 	array (
-		'total_shards' => 3,
+		'total_shards' => 4,
 		'shards_digit' => 10,
 		'username' => 'securityuser',
 		'password' => 'password',
 		'server_list' => array (
-			'192.168.175.105' => array('min'=>0, 'max'=>0),
-			'192.168.175.207' => array('min'=>1, 'max'=>1),
-			'192.168.175.236' => array('min'=>2, 'max'=>2)
+			'192.168.175.105' => array('min'=>0, 'max'=>1),
+			'192.168.175.236' => array('min'=>2, 'max'=>3)
 		) 
 	);
 
 $dbconfig['security_rule'] =
 	array (
-		'total_shards' => 3,
+		'total_shards' => 4,
 		'shards_digit' => 10,
 		'username' => 'securityuser',
 		'password' => 'password',
 		'server_list' => array (
-			'192.168.175.105' => array('min'=>0, 'max'=>0),
-			'192.168.175.207' => array('min'=>1, 'max'=>1),
-			'192.168.175.236' => array('min'=>2, 'max'=>2)
+			'192.168.175.105' => array('min'=>0, 'max'=>1),
+			'192.168.175.236' => array('min'=>2, 'max'=>3)
 		) 
 	);
 ?>
