@@ -67,6 +67,18 @@ class GroupRulesDao extends GroupRulesDaoParent {
 		$this->save();
 	}
 
+	public function countApplicationRules($appId) {
+		$rules = new GroupRulesDao();
+		$rules->setServerAddress($applicationId);
+
+		$builder = new QueryBuilder($rules);
+		$res = $builder->select('COUNT(*) as count')
+					   ->where('app_id', $applicationId)
+					   ->find();
+
+		return $res['count'];
+	}
+
 // ============================================ override functions ==================================================
 
 	protected function beforeInsert() {

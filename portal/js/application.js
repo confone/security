@@ -22,3 +22,23 @@ function addNewRule(baseUrl) {
 
 	window.location.href = url;
 }
+
+function newApplication() {
+	var div = document.getElementById('new_application');
+
+	if (div.style.display==='block') {
+		div.style.display = 'none';
+	} else {
+		div.style.display = 'block';
+	}
+}
+
+function newApplicationRule() {
+	var div = document.getElementById('new_path');
+
+	if (div.style.display==='block') {
+		div.style.display = 'none';
+	} else {
+		div.style.display = 'block';
+	}
+}

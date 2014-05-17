@@ -80,6 +80,10 @@ class Application extends Model {
     	return $appGroupDao->getId();
     }
 
+    public function getGroupCount() {
+    	return AppGroupDao::countApplicationGroups($this->getId());
+    }
+
     public function getGroups() {
     	if (empty($this->groups)) {
     		$appGroups = AppGroupDao::getApplicationGroups($this->getId());
@@ -95,6 +99,10 @@ class Application extends Model {
 
     public function hasRule($ruleId) {
     	return GroupRulesDao::isRuleInApplication($ruleId, $this->getId());
+    }
+
+    public function getRuleCount() {
+    	return GroupRulesDao::countApplicationRules($this->getId());
     }
 
     public function isAvailableToUser($userId) {

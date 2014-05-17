@@ -63,6 +63,20 @@ class AppGroupDao extends AppGroupDaoParent {
 		}
 	}
 
+	public static function countApplicationGroups($appId) {
+		$appGroup = new AppGroupDao();
+		$sequence = $appId;
+		$appGroup->setServerAddress($sequence);
+
+		$builder = new QueryBuilder($appGroup);
+		$res = $builder->select('COUNT(*) as count')
+					   ->where('app_id', $appId)
+					   ->where('group_name', self::ROOT_GROUP, '<>')
+					   ->find();
+
+		return $res['count'];
+	}
+
 // ============================================ override functions ==================================================
 
 	protected function beforeInsert() {
