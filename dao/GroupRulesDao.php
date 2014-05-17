@@ -73,7 +73,7 @@ class GroupRulesDao extends GroupRulesDaoParent {
 
 		$builder = new QueryBuilder($rules);
 		$res = $builder->select('COUNT(*) as count')
-					   ->where('app_id', $applicationId)
+					   ->where('app_id', $appId)
 					   ->find();
 
 		return $res['count'];
