@@ -2,14 +2,16 @@
 class QueryBuilder {
 
 	private $object = null;
+	private $async = false;
 	private $query = '';
 	private $and = false;
 	private $isInsert = false;
 	private $connection = null;
 	private $result = null;
 
-	public function __construct($object) {
+	public function __construct($object, $async=false) {
 		$this->object = $object;
+		$this->async = $async;
 		$this->getConnection();
 	}
 
@@ -98,7 +100,7 @@ class QueryBuilder {
 	public function in($field, $range) {
 		$in = $this->and ? ' AND' : ' WHERE';
 
-		$in = " $field IN (";
+		$in.= " $field IN (";
 		foreach ($range as $value) {
 			$in.= $value.",";
 		}
@@ -128,13 +130,15 @@ class QueryBuilder {
 	}
 
 	public function query() {
-		Logger::info($this->query);
-
 		if ($this->isInsert) {
-			if ($this->connection->query($this->query)) {
-				$this->result = $this->connection->insert_id;
+			if ($this->async) {
+				$this->result = $this->connection->query($this->query, MYSQLI_ASYNC);
 			} else {
-				$this->result = -1;
+				if ($this->connection->query($this->query)) {
+					$this->result = $this->connection->insert_id;
+				} else {
+					$this->result = -1;
+				}
 			}
 		} else {
 			$this->result = $this->connection->query($this->query); 
@@ -167,6 +171,10 @@ class QueryBuilder {
 		}
 
 		return array();
+	}
+
+	public function getQuery() {
+		return $this->query;
 	}
 
 // =========================================================================================== private

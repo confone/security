@@ -49,6 +49,7 @@ class RuleCacheThrottlingDao extends RuleCacheThrottlingDaoParent {
 	protected function beforeInsert() {
 		$sequence = $this->getRuleId();
 		$this->setShardId($sequence);
+		$this->asyncInsert = true;
 	}
 
 	protected function isShardBaseObject() {
