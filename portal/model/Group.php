@@ -77,6 +77,10 @@ class Group extends Model {
 		return $this->rules;
 	}
 
+	public function countGroupRules() {
+		return GroupRulesDao::countGroupRules($this->dao->getAppId(), $this->dao->getId());
+	}
+
     public function getAppId() {
         return $this->dao->getAppId();
     }

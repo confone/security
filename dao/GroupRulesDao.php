@@ -69,12 +69,25 @@ class GroupRulesDao extends GroupRulesDaoParent {
 
 	public function countApplicationRules($appId) {
 		$rules = new GroupRulesDao();
-		$rules->setServerAddress($applicationId);
+		$rules->setServerAddress($appId);
 
 		$builder = new QueryBuilder($rules);
 		$res = $builder->select('COUNT(*) as count')
 					   ->where('app_id', $appId)
 					   ->find();
+
+		return $res['count'];
+	}
+
+	public function countGroupRules($appId, $groupId) {
+		$rules = new GroupRulesDao();
+		$rules->setServerAddress($appId);
+
+		$builder = new QueryBuilder($rules);
+		$rows = $builder->select('COUNT(*) as count')
+						->where('app_id', $appId)
+						->where('group_id', $groupId)
+						->find();
 
 		return $res['count'];
 	}
