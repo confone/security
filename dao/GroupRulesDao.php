@@ -84,10 +84,10 @@ class GroupRulesDao extends GroupRulesDaoParent {
 		$rules->setServerAddress($appId);
 
 		$builder = new QueryBuilder($rules);
-		$rows = $builder->select('COUNT(*) as count')
-						->where('app_id', $appId)
-						->where('group_id', $groupId)
-						->find();
+		$res = $builder->select('COUNT(*) as count')
+					   ->where('app_id', $appId)
+					   ->where('group_id', $groupId)
+					   ->find();
 
 		return $res['count'];
 	}

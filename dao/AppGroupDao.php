@@ -71,10 +71,9 @@ class AppGroupDao extends AppGroupDaoParent {
 		$builder = new QueryBuilder($appGroup);
 		$res = $builder->select('COUNT(*) as count')
 					   ->where('app_id', $appId)
-					   ->where('group_name', self::ROOT_GROUP, '<>')
 					   ->find();
 
-		return $res['count'];
+		return $res['count']-1;
 	}
 
 // ============================================ override functions ==================================================

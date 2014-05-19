@@ -4,6 +4,7 @@ $scripts = array('application.js');
 
 include 'view/include/header.php';
 include 'view/application/part/list-right.php';
+
 $applications = $user->getApplications();
 ?>
 <div>
@@ -13,7 +14,7 @@ $applications = $user->getApplications();
 <form action="/application/new" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 <input type="text" class="round4 holder_name" name="application_name" placeholder="(Application Name)" />
 <input type="text" class="round4 holder_description" name="description" placeholder="(Description)" />
-<input type="submit" class="button" value="Create" />
+<input type="submit" class="round4 button" value="Create" />
 </form>
 </div>
 <div class="holders">
