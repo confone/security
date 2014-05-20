@@ -4,6 +4,8 @@ $base_host = 'https://staging.security.confone.com';
 $account_url = 'https://staging.account.confone.com';
 $www_url = 'https://staging.www.confone.com';
 $content_url = 'https://staging.content.confone.com';
+$doc_url = 'https://staging.doc.confone.com';
+$help_url = 'https://staging.help.confone.com';
 
 // =======================================================================================
 // auto include directory information
