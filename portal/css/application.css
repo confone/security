@@ -76,6 +76,11 @@ div.list_holders div.holders div.section {
 	border-top: 1px solid #cdcdcd;
 	padding:25px 0px 35px 30px;
 }
+div.list_holders div.holders a.project_link {
+	font-weight:bold;
+	color:#4183c4;
+	text-decoration:none;
+}
 div.list_holders div.holders a.application_link {
 	font-weight:bold;
 	color:#4183c4;

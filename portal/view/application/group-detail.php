@@ -5,6 +5,7 @@ $scripts = array('application.js');
 global $base_host;
 
 include 'view/include/header.php';
+include 'view/application/part/group-right.php';
 ?>
 <div class="add_rule">
 New Rule: 

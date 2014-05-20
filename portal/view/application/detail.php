@@ -36,14 +36,6 @@ foreach ($groups as $group) { ?>
 <?php } ?>
 </div>
 </div>
-
-
-
-
-Rules:<br>
-<?php foreach ($application->getRootGroup()->getRules() as $rule) { ?>
-<div><a href="<?=$rule->getUrl() ?>&application_id=<?=$application->getId() ?>"><?=$rule->getName(); ?></a></div>
-<?php } ?>
 <?php 
 include 'view/include/footer.php'
 ?>
