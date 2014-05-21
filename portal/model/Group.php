@@ -29,6 +29,11 @@ class Group extends Model {
 				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_THROTTLING);
 			break;
 
+			case RuleToken::TYPE :
+				$ruleDao = new RuleTokenDao($ruleId);
+				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_TOKEN);
+			break;
+
 			case RuleBlacklist::TYPE :
 				$ruleDao = new RuleBlacklistDao($ruleId);
 				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_BLACKLIST);
@@ -59,6 +64,10 @@ class Group extends Model {
 				switch ($groupRule->getRuleType()) {
 					case GroupRulesDao::RULE_TYPE_THROTTLING :
 						$rule = new RuleThrottling($groupRule->getRuleId());
+					break;
+
+					case GroupRulesDao::RULE_TYPE_TOKEN :
+						$rule = new RuleToken($groupRule->getRuleId());
 					break;
 
 					case GroupRulesDao::RULE_TYPE_BLACKLIST :

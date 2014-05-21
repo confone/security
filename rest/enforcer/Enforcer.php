@@ -3,10 +3,12 @@ abstract class Enforcer {
 
 	private $ruleObj = null;
 	private $subject = null;
+	private $data = null;
 
-	public function Enforcer($rule, $subject) {
+	public function Enforcer($rule, $subject, $data=null) {
 		$this->ruleObj = $rule;
 		$this->subject = $subject;
+		$this->data = $data;
 	}
 
 	protected function getRuleObj() {
@@ -15,6 +17,10 @@ abstract class Enforcer {
 
 	protected function getSubject() {
 		return $this->subject;
+	}
+
+	protected function getData() {
+		return $this->data;
 	}
 
 	abstract public function enforce();

@@ -12,10 +12,14 @@ class GroupRuleHandler extends Handler {
 				$subject = $body[$rule->getName()];
 				$enforcher = new ThrottlingRuleEnforcer($rule, $subject);
 			} 
+			else if ($rule instanceof RuleTokenDao) {
+				$subject = $body[$rule->getName()];
+				$enforcher = new TokenRuleEnforcer($rule, $subject);
+			} 
 			else if ($rule instanceof RuleBlacklistDao) {
 				$subject = $body[$rule->getName()];
 				$enforcher = new BlacklistRuleEnforcer($rule, $subject);
-			} 
+			}
 			else if ($rule instanceof RuleWhitelistDao) {
 				$subject = $body[$rule->getName()];
 				$enforcher = new WhitelistRuleEnforcer($rule, $subject);

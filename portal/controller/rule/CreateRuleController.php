@@ -27,6 +27,13 @@ class CreateRuleController extends ViewController {
 						$input['description'] = param('description');
 					break;
 
+					case RuleToken::TYPE :
+						$hasRuleType = true;
+						$input = array();
+						$input['name'] = param('name');
+						$input['description'] = param('description');
+					break;
+
 					case RuleBlacklist::TYPE :
 						$hasRuleType = true;
 						$input = array();

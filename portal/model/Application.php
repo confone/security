@@ -34,6 +34,13 @@ class Application extends Model {
 				$ruleDao->save();
 			break;
 
+			case RuleToken::TYPE :
+				$ruleDao = new RuleTokenDao();
+				$ruleDao->setName($input['name']);
+				$ruleDao->setDescription($input['description']);
+				$ruleDao->save();
+			break;
+
 			case RuleBlacklist::TYPE :
 				$ruleDao = new RuleBlacklistDao();
 				$ruleDao->setName($input['name']);

@@ -9,6 +9,9 @@ function addNewRule(baseUrl) {
 	if (ruleType=='throttling') {
 		url = baseUrl+'/rule/throttling?application_id='+appId;
 	}
+	else if (ruleType=='token') {
+		url = baseUrl+'/rule/token?application_id='+appId;
+	}
 	else if (ruleType=='blacklist') {
 		url = baseUrl+'/rule/blacklist?application_id='+appId;
 	}

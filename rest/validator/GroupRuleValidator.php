@@ -36,6 +36,12 @@ class GroupRuleValidator extends Validator {
 	    			array_push($this->rules, $rule);
     			break;
 
+    			case GroupRulesDao::RULE_TYPE_TOKEN:
+	    			$rule = new RuleTokenDao($appRule->getRuleId());
+	    			$valid = !empty($input[$rule->getName()]);
+	    			array_push($this->rules, $rule);
+    			break;
+
     			case GroupRulesDao::RULE_TYPE_BLACKLIST :
 	    			$rule = new RuleBlacklistDao($appRule->getRuleId());
 	    			$valid = !empty($input[$rule->getName()]);
