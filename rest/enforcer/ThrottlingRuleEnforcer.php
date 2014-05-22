@@ -3,6 +3,7 @@ class ThrottlingRuleEnforcer extends Enforcer {
 
 	public function enforce() {
 		$subject = $this->getSubject();
+		$subject = hash('md4', $subject).'.'.strlen($subject);
 		$rule = $this->getRuleObj();
 
 		$end = strtotime('now');
