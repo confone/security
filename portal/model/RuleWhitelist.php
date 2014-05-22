@@ -11,6 +11,10 @@ class RuleWhitelist extends ModelRule {
 		return '/rule/whitelist?id='.$this->getId();
 	}
 
+	public function getType() {
+		return 'whitelist';
+	}
+
 	public function addSubject($subject) {
 		$cache = new RuleCacheWhitelistDao();
 		$cache->setRuleId($this->getId());

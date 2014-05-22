@@ -11,6 +11,10 @@ class RuleThrottling extends ModelRule {
 		return '/rule/throttling?id='.$this->getId();
 	}
 
+	public function getType() {
+		return 'throttling';
+	}
+
     public function getName() {
         return $this->dao->getName();
     }

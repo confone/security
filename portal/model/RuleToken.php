@@ -11,6 +11,10 @@ class RuleToken extends ModelRule {
 		return '/rule/token?id='.$this->getId();
 	}
 
+	public function getType() {
+		return 'token';
+	}
+
     public function getName() {
         return $this->dao->getName();
     }

@@ -13,6 +13,10 @@ class RuleBlacklist extends ModelRule {
 		return '/rule/blacklist?id='.$this->getId();
 	}
 
+	public function getType() {
+		return 'blacklist';
+	}
+
 	public function addSubject($subject) {
 		$cache = new RuleCacheBlacklistDao();
 		$cache->setRuleId($this->getId());

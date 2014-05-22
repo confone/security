@@ -1,4 +1,4 @@
-<select id="rule_type">
+<select id="rule_type" class="round4">
 <option value="throttling">Throttling</option>
 <option value="token">Token</option>
 <option value="blacklist">Blacklist</option>

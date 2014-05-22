@@ -114,3 +114,41 @@ a#create_now {
 a#create_now:hover {
 	text-decoration:underline;
 }
+label#group_name {
+	color:#000080;
+	margin:10px;
+	font-weight:bold;
+	font-style:italic;
+}
+select#rule_type {
+	background:#f6f6f6;
+	width:200px;
+	font-size:12px;
+	border:0 none;
+	height:34px;
+	padding-left:6px;
+	margin:0px 10px 0px 10px;
+}
+div#rule_list {
+	margin:30px;
+}div#rule_list label {
+	font-size:.8em;
+	color:#333;
+}
+div#rule_list div {
+	padding:20px;
+}
+div#rule_list div a {
+	color:#4183c4;
+	text-decoration:none;
+}
+div#rule_list div.odd {
+	background-color:#f6f6f6;
+}
+div#rule_list div.type {
+	float:right;
+	font-size:.8em;
+	color:#aaa;
+	padding:0px;
+	width:120px;
+}

@@ -20,6 +20,8 @@ abstract class ModelRule extends Model {
 
 	abstract public function getUrl();
 
+	abstract public function getType();
+
 	abstract protected function getDaoInstance($id);
 }
 ?>
