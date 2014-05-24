@@ -10,7 +10,9 @@ class CreateAppGroupController extends ViewController {
 		if ($application->isAvailableToUser($_SSESSION->getUserId())) {
 			$name = param('group_name');
 
-			$application->addGroup($name);
+			if (!empty($name)) {
+				$application->addGroup($name);
+			}
 		}
 
 		$this->redirect('/application/detail?id='.$applicationId);

@@ -8,7 +8,7 @@ class CreateApplicationController extends ViewController {
 
 		$name = param('application_name');
 		$description = param('description');
-		if (isset($name)) {
+		if (!empty($name)) {
 			if ($user->addApplication($name, $description)) {
 				$this->redirect('/application/list');
 			} else {
