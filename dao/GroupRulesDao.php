@@ -3,6 +3,7 @@ class GroupRulesDao extends GroupRulesDaoParent {
 
 	const RULE_TYPE_THROTTLING = 'THROTTLING';
 	const RULE_TYPE_TOKEN = 'TOKEN';
+	const RULE_TYPE_GEO = 'GEODETIC';
 	const RULE_TYPE_BLACKLIST = 'BLACKLIST';
 	const RULE_TYPE_WHITELIST = 'WHITELIST';
 

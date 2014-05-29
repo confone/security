@@ -111,4 +111,37 @@ CREATE INDEX rule_cache_token_rule_id_index ON {$dbName}.rule_cache_token (rule_
 CREATE INDEX rule_cache_token_subject_index ON {$dbName}.rule_cache_token (token(40));
 
 
+CREATE TABLE {$dbName}.rule_geo
+(
+	id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	name VARCHAR(41),
+	speed INT(10) UNSIGNED,
+	unit VARCHAR(2),
+	description VARCHAR(41),
+	create_time DATETIME,
+	modified_time DATETIME,
+
+	PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+
+CREATE INDEX rule_geo_name_index ON {$dbName}.rule_geo (name(40));
+
+
+CREATE TABLE {$dbName}.rule_cache_geo
+(
+	id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	rule_id INT(10) UNSIGNED,
+	subject VARCHAR(41),
+	lat DECIMAL(9,6),
+	lng DECIMAL(9,6),
+	create_time DATETIME,
+
+	PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+CREATE INDEX rule_cache_geo_rule_id_index ON {$dbName}.rule_cache_geo (rule_id);
+CREATE INDEX rule_cache_geo_subject_index ON {$dbName}.rule_cache_geo (subject(40));
+
+
 GRANT ALL ON {$dbName}.* TO '{$uname}'@'%' IDENTIFIED BY '{$passwd}';

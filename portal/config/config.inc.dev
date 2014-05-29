@@ -20,6 +20,7 @@ $autoload_dirs = array( '../util',
 						'controller/rule',
 						'controller/rule/throttling',
 						'controller/rule/token',
+						'controller/rule/geodetic',
 						'controller/rule/blacklist',
 						'controller/rule/whitelist',
 						'model' );

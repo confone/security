@@ -38,6 +38,7 @@ CREATE TABLE {$dbName}.group_rules
 	group_id INT(10) UNSIGNED,
 	rule_type VARCHAR(21),
 	rule_id INT(10) UNSIGNED,
+	rule_name VARCHAR(41),
 	rule_order TINYINT UNSIGNED,
 	active VARCHAR(2),
 	create_time DATETIME,
@@ -49,6 +50,7 @@ CREATE TABLE {$dbName}.group_rules
 CREATE INDEX group_rules_app_id_index ON {$dbName}.group_rules (app_id);
 CREATE INDEX group_rules_group_id_index ON {$dbName}.group_rules (group_id);
 CREATE INDEX group_rules_rule_order_index ON {$dbName}.group_rules (rule_order);
+CREATE INDEX group_rules_rule_order_index ON {$dbName}.group_rules (rule_name(40));
 CREATE INDEX group_rules_active_index ON {$dbName}.group_rules (active(1));
 
 

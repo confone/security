@@ -29,6 +29,11 @@ class Group extends Model {
 				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_THROTTLING);
 			break;
 
+			case RuleGeo::TYPE :
+				$ruleDao = new RuleGeoDao($ruleId);
+				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_GEO);
+			break;
+
 			case RuleToken::TYPE :
 				$ruleDao = new RuleTokenDao($ruleId);
 				$groupRule->setRuleType(GroupRulesDao::RULE_TYPE_TOKEN);
@@ -48,6 +53,7 @@ class Group extends Model {
 		$groupRule->setAppId($this->dao->getAppId());
 		$groupRule->setGroupId($this->getId());
 		$groupRule->setRuleId($ruleDao->getId());
+		$groupRule->setRuleName($ruleDao->getName());
 		$groupRule->save();
 
 		if (!empty($this->rules)) {
@@ -64,6 +70,10 @@ class Group extends Model {
 				switch ($groupRule->getRuleType()) {
 					case GroupRulesDao::RULE_TYPE_THROTTLING :
 						$rule = new RuleThrottling($groupRule->getRuleId());
+					break;
+
+					case GroupRulesDao::RULE_TYPE_GEO :
+						$rule = new RuleGeo($groupRule->getRuleId());
 					break;
 
 					case GroupRulesDao::RULE_TYPE_TOKEN :

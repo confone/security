@@ -23,6 +23,10 @@ abstract class Enforcer {
 		return $this->data;
 	}
 
+	public function getErrorMessage() {
+		return null;
+	}
+
 	abstract public function enforce();
 }
 ?>

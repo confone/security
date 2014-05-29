@@ -30,6 +30,17 @@ class UpdateRuleController extends ViewController {
 						$rule->setWaitTime($waitTime);
 					break;
 
+					case RuleGeo::TYPE :
+						$rule = new RuleGeo($id);
+
+						$speed = param('speed');
+						$rule->setSpeed($speed);
+						$unit = param('unit');
+						$rule->setUnit($unit);
+						$description = param('description');
+						$rule->setDescription($description);
+					break;
+
 					case RuleBlacklist::TYPE :
 						$rule = new RuleBlacklist($id);
 

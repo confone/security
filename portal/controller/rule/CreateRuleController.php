@@ -34,6 +34,15 @@ class CreateRuleController extends ViewController {
 						$input['description'] = param('description');
 					break;
 
+					case RuleGeo::TYPE :
+						$hasRuleType = true;
+						$input = array();
+						$input['name'] = param('name');
+						$input['speed'] = param('speed');
+						$input['unit'] = param('unit');
+						$input['description'] = param('description');
+					break;
+
 					case RuleBlacklist::TYPE :
 						$hasRuleType = true;
 						$input = array();

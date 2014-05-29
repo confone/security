@@ -34,6 +34,15 @@ class Application extends Model {
 				$ruleDao->save();
 			break;
 
+			case RuleGeo::TYPE :
+				$ruleDao = new RuleGeoDao();
+				$ruleDao->setName($input['name']);
+				$ruleDao->setSpeed($input['speed']);
+				$ruleDao->setUnit($input['unit']);
+				$ruleDao->setDescription($input['description']);
+				$ruleDao->save();
+			break;
+
 			case RuleToken::TYPE :
 				$ruleDao = new RuleTokenDao();
 				$ruleDao->setName($input['name']);

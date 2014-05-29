@@ -7,6 +7,7 @@ abstract class GroupRulesDaoParent extends SecurityDaoBase {
         $this->var['group_id'] = '';
         $this->var['rule_type'] = '';
         $this->var['rule_id'] = '';
+        $this->var['rule_name'] = '';
         $this->var['rule_order'] = '';
         $this->var['active'] = '';
         $this->var['create_time'] = '';
@@ -17,6 +18,7 @@ abstract class GroupRulesDaoParent extends SecurityDaoBase {
         $this->update['group_id'] = false;
         $this->update['rule_type'] = false;
         $this->update['rule_id'] = false;
+        $this->update['rule_name'] = false;
         $this->update['rule_order'] = false;
         $this->update['active'] = false;
         $this->update['create_time'] = false;
@@ -57,6 +59,14 @@ abstract class GroupRulesDaoParent extends SecurityDaoBase {
     }
     public function getRuleId() {
         return $this->var['rule_id'];
+    }
+
+    public function setRuleName($ruleName) {
+        $this->var['rule_name'] = $ruleName;
+        $this->update['rule_name'] = true;
+    }
+    public function getRuleName() {
+        return $this->var['rule_name'];
     }
 
     public function setRuleOrder($ruleOrder) {

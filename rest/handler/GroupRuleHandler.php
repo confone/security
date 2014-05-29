@@ -12,6 +12,10 @@ class GroupRuleHandler extends Handler {
 				$subject = $body[$rule->getName()];
 				$enforcher = new ThrottlingRuleEnforcer($rule, $subject);
 			} 
+			else if ($rule instanceof RuleGeoDao) {
+				$subject = $body[$rule->getName()];
+				$enforcher = new GeoRuleEnforcer($rule, $subject);
+			} 
 			else if ($rule instanceof RuleTokenDao) {
 				$subject = $body[$rule->getName()];
 				$enforcher = new TokenRuleEnforcer($rule, $subject);
@@ -26,7 +30,12 @@ class GroupRuleHandler extends Handler {
 			}
 
 			if (!$enforcher->enforce()) {
-				$failures[$rule->getName()] = $rule->getErrorMessage();
+				$message = $enforcher->getErrorMessage();
+				if (empty($message)) {
+					$failures[$rule->getName()] = $rule->getErrorMessage();
+				} else {
+					$failures[$rule->getName()] = $message;
+				}
 			}
 		}
 

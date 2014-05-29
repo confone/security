@@ -11,6 +11,7 @@ register('/rule/new',              new CreateRuleController());
 register('/rule/update',           new UpdateRuleController());
 register('/rule/throttling',       new RuleThrottlingController());
 register('/rule/token',            new RuleTokenController());
+register('/rule/geodetic',         new RuleGeoController());
 register('/rule/blacklist',        new RuleBlacklistController());
 register('/rule/blacklist/add',    new RuleBlacklistAddController());
 register('/rule/blacklist/remove', new RuleBlacklistRemoveController());
