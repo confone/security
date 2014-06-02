@@ -54,7 +54,7 @@ class GeoRuleEnforcer extends Enforcer {
 			$seconds = $nowTime - $thenTime;
 	
 			$allowed = ($speed*$seconds)/3600;
-Logger::info($actual.":".$allowed);
+
 			if ($actual<=$allowed) {
 				$cache->setLat($lat1);
 				$cache->setLng($lng1);
